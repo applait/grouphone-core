@@ -44,7 +44,7 @@ h4 { font-size:       2.5rem; }
 h5 { font-size:       2rem; }
 h6 { font-size:       1.5rem; }
 a {
-  color:              #c00;
+  color:              #fff;
   outline:            0;
   text-decoration:    none;
 }
@@ -59,6 +59,7 @@ body > section {
   align-items:        center;
   justify-content:    center;
 }
+footer { font-size: 1.5rem; }
 button::-moz-focus-inner {
   border:             0;
   padding:            0;
@@ -87,6 +88,7 @@ button::-moz-focus-inner {
   border-radius:      4px;
   font-size:          1.5rem;
   font-family:        "Alegreya Sans";
+  transition:         all 500ms ease;
 }
 #actionItem {
   margin:             2rem auto 1rem;
@@ -105,6 +107,11 @@ button::-moz-focus-inner {
   color:              #2c3e50;
   background:         #dfdfdf;
   cursor:             pointer;
+  transition:         all 500ms ease;
+}
+.fa {
+  margin:             auto 1rem;
+  font-size:          3rem;
 }
 
 /* 2. Pseudoclass */
@@ -124,10 +131,12 @@ button::-moz-focus-inner {
 /* 2. Media Queries */
 @media screen and (max-width: 960px) {
   html { font-size: 12px; }
+  footer { font-size: 2rem; }
   #request, #invitee, #sendRequest, #disclaimer { font-size: 2rem; }
 }
 @media screen and (max-width: 640px) {
   html { font-size: 8px; }
+  footer { font-size: 2.5rem; }
   .break { display: block; margin-bottom: 1rem; }
   #request, #invitee, #sendRequest, #disclaimer { font-size: 2rem; }
 }
