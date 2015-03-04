@@ -34,7 +34,7 @@ HTTP Response status: `200`.
 
 ```json
 {
-    "message": "Ok",
+    "message": "Got it. You are in queue!",
     "status": 200
 }
 ```
@@ -45,7 +45,7 @@ HTTP Response status: `500`.
 
 ```json
 {
-    "message": "Something went wrong",
+    "message": "Oops! Something went wrong",
     "status": 500
 }
 ```
@@ -56,7 +56,7 @@ HTTP Response status: `406`.
 
 ```json
 {
-    "message": "E-mail address already registered",
+    "message": "This email is already registered. But, we're overjoyed to see your interest!",
     "status": 406
 }
 ```
