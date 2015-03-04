@@ -40,16 +40,15 @@
       <div>
         <img class="mainLogo" src="/img/logo-256.png">
         <h1>Grouphone</h1>
-        <h4>Group audio calls on your phone... and just that.</h4>
+        <h4>Group audio calls on your phone... <span class="break">and just that.</span></h4>
         <a href="#invite" id="request" class="button">Request Beta Invite</a>
-      <div>
+      </div>
     </section>
     <section id="features">
       <div>
         <h4>Talk to friends, over internet</h4>
-        <h4>From your favorite smartphone</h4>
-        <h3>Create a call or, join a call</h3>
-        <h2>Invite others or, get invited</h2>
+        <h3>From your favorite smartphone</h3>
+        <h2>Create a call or, join a call</h2>
       </div>
     </section>
     <section id="requires">
@@ -61,9 +60,9 @@
     </section>
     <section id="invite">
       <div>
-        <h4>Forever free on <b>Firefox OS</b>, launching this March</h4>
+        <h4>Forever free on <b>Firefox OS</b>, <span class="break">launching this March</span></h4>
         <h3>Coming soon on Android and iOS</h3>
-        <h2>Interested?</h2>
+        <h1>Interested?</h1>
         <label id="actionItem">
           <input type="email" id="invitee" placeholder="Email ID" />
           <button id="sendRequest">Let Me In</button>
@@ -94,6 +93,13 @@
           timeDelta = Date.now();
         }
         return false;
+      });
+
+      $("#invitee").keypress(function (event) {
+        if(event.which == 13) {
+          $("#sendRequest").click();
+          return false;
+        }
       });
 
       $("#sendRequest").click(function (event) {
