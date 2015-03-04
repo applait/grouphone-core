@@ -58,12 +58,6 @@ body > section {
 }
 
 /* 1. ID & Class */
-#teaser {
-  padding-top:        10vh;
-}
-#teaser h1 {
-  letter-spacing:     -0.125rem;
-}
 #request {
   color:              #fff;
   margin-top:         2rem;

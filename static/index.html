@@ -75,9 +75,25 @@
     </section>
 
     <script src="js/vendor/jquery.js"></script>
+    <script src="js/vendor/jquery.mousewheel.js"></script>
     <script src="js/vendor/jquery.smooth-scroll.js"></script>
     <script>
       $("#request").smoothScroll();
+
+      var timeDelta = Date.now();
+      $(document).on("mousewheel", function(event) {
+        if (Date.now() - timeDelta > 750) {
+          if (event.deltaY < 0) {
+            $.smoothScroll($(document).scrollTop() + $(window).height());
+          }
+          if (event.deltaY > 0) {
+            $.smoothScroll($(document).scrollTop() - $(window).height());
+          }
+          timeDelta = Date.now();
+        }
+        return false;
+      });
+
     </script>
   </body>
 </html>
