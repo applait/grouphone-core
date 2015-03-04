@@ -56,6 +56,10 @@ body > section {
   align-items:        center;
   justify-content:    center;
 }
+button::-moz-focus-inner {
+    border:0;
+    padding:0;
+}
 
 /* 1. ID & Class */
 #request {
@@ -68,18 +72,41 @@ body > section {
   font-size:          1.5rem;
   font-family:        "Alegreya Sans";
 }
+#invitee, #sendRequest {
+  padding:            0.5rem 1rem;
+  background:         #fff;
+  border:             1px solid #ff7e00;
+  font-size:          1.5rem;
+  font-family:        "Alegreya Sans";
+}
+#sendRequest {
+  position:           relative;
+  left:               -4px;
+  color:              #fff;
+  background:         #ff7e00;
+}
 
 /* 2. Pseudoclass */
 #request:hover, #request:active {
   background:         #ff4e00;
-} 
+}
+#actionItem:hover #invitee,
+#actionItem:active #invitee {
+  border-color:       #ff4e00;
+}
+#actionItem:hover #sendRequest,
+#actionItem:active #sendRequest {
+  background:         #ff4e00;
+}
 
 /* 2. Media Queries */
 @media screen and (max-width: 960px) {
   html { font-size: 12px; }
+  #request, #invitee, #sendRequest, #disclaimer { font-size: 2rem; }
 }
 @media screen and (max-width: 640px) {
   html { font-size: 8px; }
+  #request, #invitee, #sendRequest, #disclaimer { font-size: 2rem; }
 }
 @media screen and (max-height: 480px) {
 }
