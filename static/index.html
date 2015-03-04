@@ -61,11 +61,11 @@
     </section>
     <section id="invite">
       <div>
-        <h4>Launching on <b>Firefox OS</b> this March</h4>
+        <h4>Forever free on <b>Firefox OS</b>, launching this March</h4>
         <h3>Coming soon on Android and iOS</h3>
         <h2>Interested?</h2>
         <label id="actionItem">
-          <input type="text" id="invitee" placeholder="Email ID" />
+          <input type="email" id="invitee" placeholder="Email ID" />
           <button id="sendRequest">Let Me In</button>
         </label>
         <p id="disclaimer">
@@ -97,16 +97,20 @@
       });
 
       $("#sendRequest").click(function (event) {
+        if (!$("#invitee").val().trim()) {
+          $("#invitee").attr("placeholder", "Email ID, please!").focus();
+          return false;
+        }
         var endpoint = "/api/requestinvite/" + $("#invitee").val();
         $.ajax({
           type:     "post",
           cache:    false,
           url:      endpoint,
           success:  function (result) {
-            $("#actionItem").html(result.message);
+            $("#actionItem").html("<h5>" + result.message + "</h5>");
           },
           error:    function (error) {
-            $("#actionItem").append("<br />" + error);
+            $("#actionItem").append("<h5>" + error.responseJSON.message + "</h5>");
           }
         });
       });
