@@ -53,7 +53,6 @@
 
     ga('create', 'UA-57958355-2', 'auto');
     ga('send', 'pageview');
-
     </script>
 
   </head>
@@ -64,7 +63,7 @@
         <img class="mainLogo" src="/img/logo-256.png">
         <h1>Grouphone</h1>
         <h4>Group audio calls on your phone... <span class="break">and just that.</span></h4>
-        <a href="#invite" id="request" class="button">Request Beta Invite</a>
+        <a href="#invite" id="request" class="button">Beta Program Closed</a>
       </div>
     </section>
     <section id="features">
@@ -84,16 +83,14 @@
     <section id="invite">
       <div>
         <h4>Forever free for <b>Firefox OS</b>, <span class="break">launching this March</span></h4>
-        <h3>Coming soon on Android and iOS</h3>
+        <h4>Coming soon on Android and iOS</h4>
+        <br />
         <h1>Interested?</h1>
-        <label id="actionItem">
-          <input type="email" id="invitee" placeholder="Email ID" />
-          <button id="sendRequest">Request Invite</button>
-        </label>
-        <p id="disclaimer">
-          We'll only email you to send the invitation.
-          <br />
-          We won't do anything shady... promise!
+        <p class="disclaimer">
+          We've just closed the Grouphone early beta access program on 22nd March, 2015. Please wait for the next round.
+        </p>
+        <p class="disclaimer">
+          If you've requested already, we'll get back to you before the end of March.
         </p>
         <footer>
           <p>Made with &nbsp;❤&nbsp; by <a href="http://applait.com/" target="_blank">Applait.</a></p>
@@ -127,33 +124,6 @@
         }
         return false;
       });
-
-      $("#invitee").keypress(function (event) {
-        if(event.which == 13) {
-          $("#sendRequest").click();
-          return false;
-        }
-      });
-
-      $("#sendRequest").click(function (event) {
-        if (!$("#invitee").val().trim()) {
-          $("#invitee").attr("placeholder", "Email ID, please!").focus();
-          return false;
-        }
-        var endpoint = "/api/requestinvite/" + $("#invitee").val();
-        $.ajax({
-          type:     "post",
-          cache:    false,
-          url:      endpoint,
-          success:  function (result) {
-            $("#actionItem").html("<h5>" + result.message + "</h5>");
-          },
-          error:    function (error) {
-            $("#actionItem").append("<h5>" + error.responseJSON.message + "</h5>");
-          }
-        });
-      });
-
     </script>
   </body>
 </html>

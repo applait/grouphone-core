@@ -132,7 +132,7 @@ button::-moz-focus-inner {
 @media screen and (max-width: 960px) {
   html { font-size: 12px; }
   footer { font-size: 2rem; }
-  #request, #invitee, #sendRequest, #disclaimer { font-size: 2rem; }
+  #request, #invitee, #sendRequest, .disclaimer { font-size: 2rem; }
 }
 @media screen and (max-width: 640px) {
   html { font-size: 8px; }
@@ -141,7 +141,7 @@ button::-moz-focus-inner {
   #invitee { border-radius: 4px 4px 0 0; text-align: center; padding: 1rem; }
   #sendRequest { left: 0; top: -2px; border-top-color: #aaa;  border-radius: 0 0 4px 4px; width: 100%; }
   .break { display: block; margin-bottom: 1rem; }
-  #request, #disclaimer { font-size: 2rem; }
+  #request, .disclaimer { font-size: 2rem; }
   #invitee, #sendRequest { font-size: 2.5rem; }
 }
 @media screen and (max-height: 480px) {
