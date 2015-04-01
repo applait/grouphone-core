@@ -14,10 +14,8 @@ if (process.argv && process.argv[2]) {
 }
 
 // Set useful globals
-global.gp = {
-    db: db,
-    config: config
-};
+global.db = db,
+global.config = config;
 
 // Configure application
 app.use(bodyParser.json());
@@ -26,6 +24,8 @@ app.use("/", express.static(path.join(__dirname, 'static')));
 
 // Register routes
 app.use("/api", require("./api/api"));
+app.use("/app", require("./api/app"))
+app.use('/auth', require("./api/auth"));
 
 // Start the server
 var server = app.listen(config.APP_PORT, config.APP_IP, function () {
