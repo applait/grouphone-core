@@ -11,7 +11,7 @@
     },
     "developer": {
         "name": "Applait",
-        "url": "http: //applait.com"
+        "url": "http://applait.com"
     },
     "type": "web",
     "appcache_path": "/manifest.appcache",
