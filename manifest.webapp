@@ -2,7 +2,7 @@
     "version": "1.0.0",
     "name": "Grouphone",
     "description": "Group calls for Firefox OS",
-    "launch_path": "/app.html",
+    "launch_path": "/app/index.html",
     "icons": {
         "48": "/img/icons/48.png",
         "60": "/img/icons/60.png",
