@@ -15,17 +15,17 @@ if (process.argv && process.argv[2]) {
 
 // Set useful globals
 global.db = db,
-global.config = config;
+global.config = config,
+global.approot = __dirname + "/";
 
 // Configure application
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use("/", express.static(path.join(__dirname, 'static')));
 
 // Register routes
-app.use("/api", require("./api/api"));
-app.use("/app", require("./api/app"))
-app.use('/auth', require("./api/auth"));
+app.use("/", require("./app"));
+app.use("/api", require("./api"));
+app.use("/", express.static(path.join(__dirname, "static")));
 
 // Start the server
 var server = app.listen(config.APP_PORT, config.APP_IP, function () {
