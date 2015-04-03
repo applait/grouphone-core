@@ -12,12 +12,12 @@ router.get("/", function (req, res) {
 
 // The landing page of the webapp
 router.get("/app", function (req, res) {
-    res.status(200).sendFile(approot + "static/app/app.html");
+    res.render("app");
 });
 
 // For a get request, send the sign-in page
 router.get("/login", function (req, res) {
-    res.status(200).sendFile(approot + "static/app/login.html");
+    res.render("login");
 });
 
 // For a post request, process the given payload
