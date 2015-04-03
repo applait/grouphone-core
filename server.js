@@ -19,6 +19,7 @@ global.config = config,
 global.approot = __dirname + "/";
 
 // Configure application
+app.set("view engine", "ejs");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
