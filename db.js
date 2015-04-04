@@ -13,5 +13,6 @@ module.exports = {
     }),
     activations: mongo.collection("activations"),
     accounts: mongo.collection("accounts"),
+    sessions: mongo.collection("sessions"),
     mongo: mongo
 };
