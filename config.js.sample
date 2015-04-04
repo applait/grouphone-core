@@ -3,7 +3,8 @@ var config = {
     APP_IP : "0.0.0.0",
     APP_PORT: "8080",
     HOSTNAME: "grouphone.applait.com",
-    MONGO_URL: "mongodb://localhost:27017/grouphone"
+    MONGO_URL: "mongodb://localhost:27017/grouphone",
+    SALT: "w#e^w7&e*3@w74r32!"
 };
 
 module.exports = config;
