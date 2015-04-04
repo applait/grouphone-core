@@ -15,6 +15,7 @@ if (process.argv && process.argv[2]) {
 
 // Set useful globals
 global.db = db,
+global.libs = require("./api/libs"),
 global.config = config,
 global.approot = __dirname + "/";
 
