@@ -13,18 +13,18 @@ router.get("/", function (req, res) {
 });
 
 // The landing page of the webapp
-router.get("/app", function (req, res) {
+router.get("/app", auth, function (req, res) {
   res.render("app");
 });
 
 // For a get request, send the sign-in page
-router.get("/login", function (req, res) {
+router.get("/login", noauth, function (req, res) {
   res.render("login");
 });
 
 // For a post request, process the given payload
 // Send user the /app page on successful login
-router.post("/login", function (req, res) {
+router.post("/login", noauth, function (req, res) {
   // Query the login API
   request.post(
     { url: apibase + "/api/login",
@@ -32,16 +32,37 @@ router.post("/login", function (req, res) {
     function (err, response, body) {
       if (!err && response.statusCode == 200) {
         // User credentials matched. Create session. Redirect to app landing page.
-        console.log(JSON.parse(body));
+        body = JSON.parse(body);
+        // Store cookie for 30 days
+        res.cookie("gp_email", body.email, { maxAge: 2592000000, signed: true });
+        res.cookie("gp_token", body.token, { maxAge: 2592000000, signed: true });
         res.redirect("/app");
       } else {
         // User did not match. Redirect back to login page with error message.
-        console.log("Response status: ", response.statusCode);
-        console.log("Response body: ", JSON.parse(body));
         if (err) console.log("Error", err);
         res.redirect("/login?failed=1");
       }
     });
+});
+
+router.get("/logout", function (req, res) {
+  if (req.user) {
+  request.get(
+    apibase + "/api/logout",
+    { qs: { email: req.user.email, token: req.user.token }},
+    function (err, response, body) {
+      if (err) return res.redirect("/app");
+      if (response.statusCode == 200) {
+        res.clearCookie("gp_email", { signed: true });
+        res.clearCookie("gp_token", { signed: true });
+        res.redirect("/");
+      }
+    });
+  } else {
+    res.clearCookie("gp_email", { signed: true });
+    res.clearCookie("gp_token", { signed: true });
+    res.redirect("/");
+  }
 });
 
 module.exports = router;
