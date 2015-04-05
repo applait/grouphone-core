@@ -4,7 +4,8 @@ var config = {
     APP_PORT: "8080",
     HOSTNAME: "grouphone.applait.com",
     MONGO_URL: "mongodb://localhost:27017/grouphone",
-    SALT: "w#e^w7&e*3@w74r32!"
+    SALT: "w#e^w7&e*3@w74r32!",
+    MANDRILL_API_KEY: ""
 };
 
 module.exports = config;
