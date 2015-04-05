@@ -30,6 +30,7 @@
     "mongoskin": "~1.4.13",
     "passport": "~0.2.1",
     "passport-local": "~1.0.0",
-    "mandrill-api": "~1.0.41"
+    "mandrill-api": "~1.0.41",
+    "request": "~2.55.0"
   }
 }
