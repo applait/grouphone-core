@@ -78,3 +78,6 @@ sftp-config.json
 
 # Ignore main config file
 /config.js
+
+# Prevent committing of /api
+/api/

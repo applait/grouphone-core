@@ -4,8 +4,7 @@ var express = require("express"),
     path = require("path"),
     bodyParser = require("body-parser"),
     cookieParser = require("cookie-parser"),
-    config = require("./config"),
-    db = require("./db");
+    config = require("./config");
 
 var app = express();
 
@@ -15,8 +14,6 @@ if (process.argv && process.argv[2]) {
 }
 
 // Set useful globals
-global.db = db,
-global.libs = require("./api/libs"),
 global.config = config,
 global.approot = __dirname + "/";
 
@@ -46,11 +43,10 @@ app.use(function (req, res, next) {
 
 // Register routes
 app.use("/", require("./app"));
-app.use("/api", require("./api"));
 app.use("/", express.static(path.join(__dirname, "static")));
 
 // Start the server
 var server = app.listen(config.APP_PORT, config.APP_IP, function () {
-    console.log("Starting Grouphone...");
+    console.log("Starting Grouphone Web client server...");
     console.log("Listening on port %s:%d", config.APP_IP, config.APP_PORT);
 });
