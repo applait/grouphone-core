@@ -7,17 +7,17 @@ var router = require("express").Router();
 
 // The landing page of the website
 router.get("/", function (req, res) {
-    res.status(200).sendFile(approot + "static/index.html");
+  res.status(200).sendFile(approot + "static/index.html");
 });
 
 // The landing page of the webapp
 router.get("/app", function (req, res) {
-    res.render("app");
+  res.render("app");
 });
 
 // For a get request, send the sign-in page
 router.get("/login", function (req, res) {
-    res.render("login");
+  res.render("login");
 });
 
 // For a post request, process the given payload
