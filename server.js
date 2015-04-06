@@ -24,8 +24,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser(config.SALT));
 
 // Set middlewares
-global.auth = require("./auth").auth;
-global.noauth = require("./auth").noauth;
+global.auth = require("./libs/auth").auth;
+global.noauth = require("./libs/auth").noauth;
 
 // Middleware to populate `req.user` with user information.
 // If `req.user` is set with `email` and `token` properties, then the user is logged in.
@@ -42,8 +42,8 @@ app.use(function (req, res, next) {
 });
 
 // Register routes
-app.use("/", require("./app"));
 app.use("/", express.static(path.join(__dirname, "static")));
+app.use("/", require("./libs/routes"));
 
 // Start the server
 var server = app.listen(config.APP_PORT, config.APP_IP, function () {
