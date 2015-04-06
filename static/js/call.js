@@ -2,7 +2,7 @@ var localstream = null;
 var token = null;
 var room = null;
 
-var initcall = function (sessionid) {
+var initcall = function (sessionid, username) {
 
     var socket = io.connect("http://conqueror.applait.com:8000/"),
         callidholder = document.getElementById("callid");
@@ -54,6 +54,8 @@ var initcall = function (sessionid) {
             callmethod = "call:connect";
             calldata.sessionid = callid;
         }
+
+        calldata.username = username;
 
         socket.emit(callmethod, calldata, function (err, data) {
             if (err) {

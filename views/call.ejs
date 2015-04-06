@@ -16,4 +16,10 @@
   </div>
 </div>
 
+<script>
+ window.addEventListener("DOMContentLoaded", function () {
+   initcall("<%= sessionid %>", "<%= user.email %>");
+ });
+</script>
+
 <%- include("includes/foot") %>

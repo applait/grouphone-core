@@ -5,7 +5,8 @@
 
 var router = require("express").Router(),
     request = require("request"),
-    apibase = "http://" + config.API_HOSTNAME + ":" + config.API_PORT;
+    apibase = "http://" + config.API_HOSTNAME + ":" + config.API_PORT,
+    crypto = require("crypto");
 
 // The landing page of the website
 router.get("/", function (req, res) {
@@ -63,6 +64,15 @@ router.get("/logout", function (req, res) {
     res.clearCookie("gp_token", { signed: true });
     res.redirect("/");
   }
+});
+
+router.get("/call", auth, function (req, res) {
+  res.render("call", { sessionid: null, user: req.user });
+});
+
+router.get("/join/:sessionid", function (req, res) {
+  var email = crypto.randomBytes(2).toString("hex") + "@guest.grouphone.me";
+  res.render("call", { sessionid: req.params.sessionid, user: { email: email } });
 });
 
 module.exports = router;
