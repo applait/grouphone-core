@@ -1,19 +1,22 @@
 <%- include("includes/head") %>
 
+<div class="container">
 <img id="logo" src="../img/logo.png">
 <h2 class="brand" style="margin-bottom: 1rem;">Grouphone</h2>
-<core-field>
-  <core-icon icon="social:person"></core-icon>
-  <input name="username" placeholder="Username" flex>
-</core-field>
-<core-field>
-  <core-icon icon="communication:vpn-key"></core-icon>
-  <input name="password" placeholder="Password" flex>
-</core-field>
-<paper-button id="login" raised class="colored">Log In</paper-button>
+<form method="POST">
+  <core-field>
+    <core-icon icon="social:person"></core-icon>
+    <input name="email" type="email" placeholder="Username" flex>
+  </core-field>
+  <core-field>
+    <core-icon icon="communication:vpn-key"></core-icon>
+    <input name="password" type="password" placeholder="Password" flex>
+  </core-field>
+  <input type="submit" value="Log In" />
+</form>
 <p>
-  Need an account?<br />
-  Request <a href="http://grouphone.applait.com/">beta invite</a>.
+  <a href="/forgot">Forgot Password?</a>.
 </p>
+</div>
 
 <%- include("includes/foot") %>

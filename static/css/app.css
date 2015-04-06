@@ -33,6 +33,13 @@ p {
 a {
   color: #369;
 }
+input {
+  width: 16rem;
+  margin: auto;
+  display: block;
+  padding: 0.5rem 2rem;
+  font-size: 1.25rem;
+}
 
 /* 1. ID & Class */
 .brand {
@@ -43,6 +50,7 @@ a {
 .container {
   font-size: 16px;
   margin: auto;
+  padding-top: 2rem;
   display: flex;
   display: flexbox;
   flex-direction: column;
