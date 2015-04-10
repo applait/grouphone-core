@@ -87,15 +87,11 @@ router.get("/join/:sessionid", function (req, res) {
   res.render("call", { sessionid: req.params.sessionid, user: { email: email } });
 });
 
-router.get("/forgot", noauth, function (req, res) {
-  res.render("forgot");
-});
-
 router.post("/forgot", noauth, function (req, res) {
   var email = req.body && req.body.email && req.body.email.trim();
 
   if (!email) {
-    return res.redirect("/login");
+    return res.status(402).json({ message: "Need email." });
   }
 
   // Query the forgot API
@@ -106,12 +102,11 @@ router.post("/forgot", noauth, function (req, res) {
       if (!err && response.statusCode == 200) {
         // User credentials matched. Create session. Redirect to app landing page.
         body = JSON.parse(body);
-        console.log("Forgot password request", body);
-        res.redirect("/login?forgot=1");
+        res.status(200).json({ message: body });
       } else {
         // User did not match. Redirect back to login page with error message.
         if (err) console.log("Error", err);
-        res.redirect("/forgot?failed=1");
+        res.status(403).json({ message: "User not found."});
       }
     });
 });
