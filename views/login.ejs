@@ -1,11 +1,11 @@
 <%- include("includes/head") %>
-      <form method="POST">
-        <input name="email" type="email" placeholder="Email ID">
-        <input name="password" type="password" placeholder="Password">
-        <input type="submit" value="Go" />
-        <p>
-          <a href="/forgot">Forgot Password?</a>.
-        </p>
+      <form method="POST" class="pure-form">
+        <fieldset class="pure-group">
+          <input name="email" type="email" placeholder="Email ID" class="pure-input-1-2">
+          <input name="password" type="password" placeholder="Password" class="pure-input-1-2">
+          <input type="submit" value="Login to Grouphone" class="pure-button pure-button-primary pure-input-1-2" />
+        </fieldset>
+        <a href="/forgot" class="pure-button">Forgot Password?</a>
       </form>
 
 <%- include("includes/foot") %>

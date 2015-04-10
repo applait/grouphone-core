@@ -12,21 +12,103 @@
 
 /* 0. Elements */
 * {
-  -moz-box-sizing:    border-box;
-  box-sizing:         border-box;
+  outline: none;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
   -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 html, body {
   margin: 0;
   padding: 0;
-  height: 100%;
   font-size: 16px;
   font-weight: 300;
   font-family: "Alegreya Sans", Sans-serif;
 }
 
 /* 1. ID & Class */
+.pure-form fieldset {
+  padding: 2rem 1rem;
+}
+.pure-form .pure-group input:nth-child(n) {
+  width: 100%;
+  margin: 0 auto;
+  max-width: 20rem;
+}
+#content {
+  text-align: center;
+}
+#appNav {
+  padding: 1rem;
+  display: flex;
+  flex-direction: row;
+}
+#appNav h1 {
+  margin: 0;
+  flex-grow: 1;
+  color: #ff4e00;
+  font-size: 2rem;
+  font-weight: 300;
+}
+#createCall {
+  width: 12rem;
+  height: 12rem;
+  display: block;
+  font-size: 2rem;
+  margin: 2rem auto;
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px #fff, 0 0 0 7px #0078E7;
+}
+#callContent {
+  height: calc(100vh - 100px);
+  display: flex;
+  flex-direction: column;
+}
+#callContent > * {
+  flex: 1 1 5rem;
+}
+#callInfo {
+  font-size: 1.5rem;
+}
+#callLink {
+  padding: 0 1rem;
+}
+#callLink input {
+  width: 90%;
+  margin: auto;
+  max-width: 20rem;
+  text-align: center;
+}
+#callInfo, #callActions {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+}
+#callActions button {
+  width: 3rem;
+  height: 3rem;
+  margin: 1rem;
+  border-radius: 50%;
+  line-height: 2.5rem;
+}
+#callActions .pure-button-primary {
+  width: 4rem;
+  height: 4rem;
+  background: #d23f31;
+}
+#callActions svg {
+  width: 1rem;
+  height: 1rem;
+}
+
 
 /* 2. Pseudoclass */
+#callActions .pure-button-primary:focus {
+  background: #d23f31;
+}
+#callActions .pure-button-primary:hover,
+#callActions .pure-button-primary:active {
+  background: #b00;
+}
 
 /* 3. Media Queries */
