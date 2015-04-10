@@ -17,83 +17,15 @@
   -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 html, body {
-  height: 100%;
-  font-size: 16px;
-}
-
-body {
-  font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
   margin: 0;
   padding: 0;
-}
-p {
-  color: #444;
-  text-align: center;
-}
-a {
-  color: #369;
-}
-input {
-  width: 16rem;
-  margin: auto;
-  display: block;
-  padding: 0.5rem 2rem;
-  font-size: 1.25rem;
+  height: 100%;
+  font-size: 16px;
+  font-weight: 300;
+  font-family: "Alegreya Sans", Sans-serif;
 }
 
 /* 1. ID & Class */
-.brand {
-  font-family: "Alegreya Sans";
-  font-weight: 300;
-  margin: 0;
-}
-.container {
-  font-size: 16px;
-  margin: auto;
-  padding-top: 2rem;
-  display: flex;
-  display: flexbox;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-.content {
-  height: calc(100% - 64px);
-  font-size: 16px;
-}
-#logo {
-  margin-bottom: 1rem;
-}
-#trigger {
-  position: absolute;
-  background: #ff4e00;
-  bottom: 10%;
-  right: 10%;
-  bottom: 10vmin;
-  right: 10vmin;
-}
-#switchboard {
-  position: absolute;
-  width: calc(100% - 4rem);
-  margin: auto;
-  bottom: 10%;
-  bottom: 10vmin;
-}
-#switchboard paper-fab {
-  margin: auto 1rem;
-}
-#switchboard [mini] {
-  color: #222;
-  margin-bottom: 0.33rem;
-  background: #fff;
-}
-.calling {
-  color: #fff;
-  height: 100%;
-  background: #000;
-  text-align: center;
-  padding: 4rem 2rem;
-}
 
 /* 2. Pseudoclass */
 

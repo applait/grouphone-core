@@ -1,25 +1,11 @@
 <%- include("includes/head") %>
+      <script src="/js/vendor/erizo.js"></script>
+      <script src="/js/call.js"></script>
 
-<div class="calling">
-  <div>
-    On Call<br />
-    with Kevin, Stuart &amp; Bob<br />
-      for 4min 20sec
-      <p id="callid"></p>
-      <div id="localaudio"></div>
-      <div id="audiocontainer"></div>
-  </div>
-  <div id="switchboard">
-    <paper-fab mini icon="av:mic-off" class="white"></paper-fab>
-    <paper-fab icon="communication:call-end" id="disconnect"></paper-fab>
-    <paper-fab mini icon="social:share" class="white"></paper-fab>
-  </div>
-</div>
-
-<script>
- window.addEventListener("DOMContentLoaded", function () {
-   initcall("<%= sessionid %>", "<%= user.email %>");
- });
-</script>
+      <script>
+       window.addEventListener("DOMContentLoaded", function () {
+         initcall("<%= sessionid %>", "<%= user.email %>");
+       });
+      </script>
 
 <%- include("includes/foot") %>
