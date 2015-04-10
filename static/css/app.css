@@ -38,7 +38,7 @@ html, body {
   text-align: center;
 }
 #appNav {
-  padding: 1rem;
+  padding: 1rem calc(50% - 320px);
   display: flex;
   flex-direction: row;
 }
@@ -112,3 +112,9 @@ html, body {
 }
 
 /* 3. Media Queries */
+@media screen and (max-width: 960px) {
+  #appNav { padding: 1rem calc(50% - 240px); }
+}
+@media screen and (max-width: 640px) {
+  #appNav { padding: 1rem; }
+}
