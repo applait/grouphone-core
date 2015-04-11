@@ -95,12 +95,12 @@ window.addEventListener("DOMContentLoaded", function () {
                 callinfo.innerHTML = "Unable to publish stream";
               }
             });
-            calllink.value = "http://grouphone.me/join/" + data.session.id;
-            callinfo.innerHTML = "Call started by " + creator.name + "<br>";
+            calllink.setAttribute("value", "http://grouphone.me/join/" + data.session.id);
+            var infoString = ["Call started by", creator.name];
             if ((membercount - 2) > 0) {
-              callinfo.innerHTML += "with " + (membercount - 2);
-              callinfo.innerHTML += (membercount - 2) > 1 ? " others" : " other";
+              infoString.concat(["<br>with", (membercount - 2), "others"]);
             }
+            callinfo.innerHTML = infoString.join(" ");
             subscribeall(roomevent.streams);
           });
 
@@ -133,7 +133,7 @@ window.addEventListener("DOMContentLoaded", function () {
 
           room.connect();
           localstream.play("localaudio");
-        });
+        }, false);
 
         localstream.init();
         callinfo.innerHTML = "Waiting for you to share mic...";
@@ -153,6 +153,6 @@ window.addEventListener("DOMContentLoaded", function () {
     if (socket) socket.disconnect();
     window.onbeforeunload = null;
     location.assign("/app");
-  });
+  }, false);
 
 });
