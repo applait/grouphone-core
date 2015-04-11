@@ -91,7 +91,7 @@ router.post("/forgot", noauth, function (req, res) {
   var email = req.body && req.body.email && req.body.email.trim();
 
   if (!email) {
-    return res.status(402).json({ message: "Need email." });
+    return res.status(401).json({ message: "Need email." });
   }
 
   // Query the forgot API
@@ -102,7 +102,7 @@ router.post("/forgot", noauth, function (req, res) {
       if (!err && response.statusCode == 200) {
         // User credentials matched. Create session. Redirect to app landing page.
         body = JSON.parse(body);
-        res.status(200).json({ message: body });
+        res.status(200).json({ message: "success" });
       } else {
         // User did not match. Redirect back to login page with error message.
         if (err) console.log("Error", err);
