@@ -1,11 +1,33 @@
 <%- include("includes/head") %>
-      <form method="POST" class="pure-form">
-        <fieldset class="pure-group">
-          <input name="email" type="email" placeholder="Email ID" class="pure-input-1-2">
-          <input name="password" type="password" placeholder="Password" class="pure-input-1-2">
-          <input type="submit" value="Login to Grouphone" class="pure-button pure-button-primary pure-input-1-2" />
-        </fieldset>
-        <a href="/forgot" class="pure-button">Forgot Password?</a>
-      </form>
+<form method="POST" class="pure-form">
+  <fieldset class="pure-group">
+    <input name="email" type="email" placeholder="Email ID" class="pure-input-1-2">
+    <input name="password" type="password" placeholder="Password" class="pure-input-1-2">
+    <input type="submit" value="Login to Grouphone" class="pure-button pure-button-primary pure-input-1-2" />
+  </fieldset>
+  <a id="forgot-button" href="/forgot" class="pure-button">Forgot Password?</a>
+</form>
+
+<script>
+ window.addEventListener("DOMContentLoaded", function () {
+   $("#forgot-button").addEventListener("click", function (e) {
+     e.preventDefault();
+     var emailfield = $("input[name='email']");
+     if (!emailfield.value) {
+       emailfield.setAttribute("placeholder", "Need your email");
+       emailfield.focus();
+     } else {
+       xhr({ url: "/forgot", method: "POST", body: "email=" + emailfield.value }, function (status, body, res) {
+         if (status == 200) {
+           // Forgot password request has been generated. Do stuff here.
+           console.log(JSON.parse(body));
+         } else {
+           // Invalid email or other error reasons. Show proper error message from here.
+         }
+       });
+     }
+   }, false);
+ });
+</script>
 
 <%- include("includes/foot") %>
