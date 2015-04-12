@@ -3,13 +3,15 @@ window.addEventListener("DOMContentLoaded", function () {
   var token = null;
   var room = null;
   var socket = null;
+  var membercount = 0;
+  var creator;
 
   var initcall = function () {
 
     var callinfo = $("#callInfo"),
         calllink = $("#callLink input[type='text']");
 
-    socket = io.connect("http://conqueror.applait.com:8000/");
+    socket = io.connect("http://localhost:8000/");
 
     socket.on("message", function (message) {
       if (message.type) {
@@ -24,6 +26,29 @@ window.addEventListener("DOMContentLoaded", function () {
       }
     });
 
+    socket.on("user:joined", function () {
+      membercount++;
+      updatecallinfo();
+    });
+
+    socket.on("user:dropped", function () {
+      membercount--;
+      updatecallinfo();
+    });
+
+    var updatecallinfo = function () {
+      var infoString = ["In call with", creator.name];
+      if ((membercount - 2) > 0) {
+        infoString.push("<br>and", (membercount - 2));
+        if ((membercount - 2) == 1) {
+          infoString.push("other");
+        } else {
+          infoString.push("others");
+        }
+      }
+      callinfo.innerHTML = infoString.join(" ");
+    };
+
     var checkcall = function () {
       if (!localstream && !token && !room) {
         createcall();
@@ -34,14 +59,15 @@ window.addEventListener("DOMContentLoaded", function () {
     };
 
     var getcreator = function (members) {
-      var creator = null;
+      var user = null;
       var key;
       for (key in members) {
         if (members.hasOwnProperty(key) && members[key].creator) {
-          creator = members[key];
+          user = members[key];
         }
       }
-      return creator;
+      creator = user;
+      return user;
     };
 
     var createcall = function () {
@@ -68,7 +94,7 @@ window.addEventListener("DOMContentLoaded", function () {
         };
 
         var creator = getcreator(data.session.data.members);
-        var membercount = Object.keys(data.session.data.members).length;
+        membercount = Object.keys(data.session.data.members).length;
 
         token = data.token;
 
@@ -96,11 +122,7 @@ window.addEventListener("DOMContentLoaded", function () {
               }
             });
             calllink.setAttribute("value", "http://grouphone.me/join/" + data.session.id);
-            var infoString = ["Call started by", creator.name];
-            if ((membercount - 2) > 0) {
-              infoString.concat(["<br>with", (membercount - 2), "others"]);
-            }
-            callinfo.innerHTML = infoString.join(" ");
+            updatecallinfo();
             subscribeall(roomevent.streams);
           });
 
@@ -145,12 +167,20 @@ window.addEventListener("DOMContentLoaded", function () {
   initcall(sessionid);
   window.onunload = function () {
     if (room) room.disconnect();
-    if (socket) socket.disconnect();
+    if (socket) {
+      socket.emit("call:disconnect", { sessionid: sessionid, username: username }, function () {
+        socket.disconnect();
+      });
+    }
   };
 
   $("#endCall").addEventListener("click", function () {
     if (room) room.disconnect();
-    if (socket) socket.disconnect();
+    if (socket) {
+      socket.emit("call:disconnect", { sessionid: sessionid, username: username }, function () {
+        socket.disconnect();
+      });
+    }
     window.onbeforeunload = null;
     location.assign("/app");
   }, false);
