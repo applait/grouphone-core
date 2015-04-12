@@ -27,7 +27,7 @@ html, body {
 
 /* 1. ID & Class */
 .pure-form fieldset {
-  padding: 2rem 1rem;
+  padding: 2rem 1rem 0;
 }
 .pure-form .pure-group input:nth-child(n) {
   width: 100%;
@@ -48,6 +48,9 @@ html, body {
   color: #ff4e00;
   font-size: 2rem;
   font-weight: 300;
+}
+#notice {
+  color: #c00;
 }
 #createCall {
   width: 12rem;

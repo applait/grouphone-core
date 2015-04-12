@@ -1,0 +1,40 @@
+<%- include("includes/head") %>
+<% if (user && user.email && user.token) { %>
+      <h2>Reset Password</h2>
+      <form method="POST" class="pure-form">
+        <fieldset class="pure-group">
+          <input name="email" type="email" placeholder="Email ID" value="<%= user.email %>" readonly>
+          <input name="password" type="password" placeholder="Password" class="pure-input-1-2">
+          <input name="token" type="hidden" value="<%= user.token %>">
+          <input type="button" value="Create new password" class="pure-button pure-button-primary pure-input-1-2" />
+        </fieldset>
+        <p id="notice">&nbsp;</p>
+      </form>
+      <script>
+        window.addEventListener("DOMContentLoaded", function () {
+          $("input[type='button']").addEventListener("click", function (e) {
+            e.preventDefault();
+
+            var email = $("input[name='email']").value,
+                token = $("input[name='token']").value,
+                password = $("input[name='password']").value
+
+            if (!password) {
+              $("#notice").innerHTML = "Password Please...";
+            } else {
+              var payload = [ "email=", email, "&token=", token, "&password=", password].join("");
+              xhr({ url: "/activate", method: "POST", body: payload }, function (status, body, req) {
+                if (status == 200) {
+                  location.assign("/app");
+                } else $("#notice").innerHTML = (JSON.parse(body)).message;
+              });
+            }
+          }, false);
+        });
+      </script>
+<% } else { %>
+      <h2>Activation Failed</h2>
+      <p>Invalid token, or request already processed.</p>
+<% } %>
+
+<%- include("includes/foot") %>

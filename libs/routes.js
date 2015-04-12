@@ -34,7 +34,7 @@ router.post("/login", noauth, function (req, res) {
   var password = req.body && req.body.password && req.body.password.trim();
 
   if (!email || !password) {
-    return res.redirect("/login?failed=1");
+    return res.status(401).json({ message: "Login failed; malformed request." });
   }
   password = hash(password);
 
@@ -49,11 +49,10 @@ router.post("/login", noauth, function (req, res) {
         // Store cookie for 30 days
         res.cookie("gp_email", body.email, { maxAge: 2592000000, signed: true });
         res.cookie("gp_token", body.token, { maxAge: 2592000000, signed: true });
-        res.redirect("/app");
+        res.status(200).json({});
       } else {
-        // User did not match. Redirect back to login page with error message.
         if (err) console.log("Error", err);
-        res.redirect("/login?failed=1");
+        res.status(403).json({ message: "Login failed" });
       }
     });
 });
@@ -111,32 +110,32 @@ router.post("/forgot", noauth, function (req, res) {
     });
 });
 
-router.get("/forgot/:token", noauth, function (req, res) {
+router.get("/activate/:token", noauth, function (req, res) {
 
   // Query to see if token is valid API
   request.get(
     { url: apibase + "/api/passwd/" + req.params.token },
     function (err, response, body) {
       if (!err && response.statusCode == 200) {
-        // Token matched show activate view
+        // Token matched, show activate view
         body = JSON.parse(body);
-        res.render("resetpassword", { user: body });
+        res.render("activate", { user: body });
       } else {
         // Token did not match. Redirect back to login page with error message.
         if (err) console.log("Error", err);
-        res.redirect("/login?activate=failed");
+        res.render("activate", { user: null });
       }
     });
 });
 
-router.post("/forgot/:token", noauth, function (req, res) {
+router.post("/activate", noauth, function (req, res) {
 
   var email = req.body && req.body.email && req.body.email.trim();
   var token = req.body && req.body.token && req.body.token.trim();
   var password = req.body && req.body.password && req.body.password.trim();
 
   if (!email || !token || !password) {
-    return res.redirect("/login");
+    return res.status(401).json({ message: "Activation failed; malformed request." });
   }
 
   // Query to see if token is valid API
@@ -145,13 +144,13 @@ router.post("/forgot/:token", noauth, function (req, res) {
       form: { email: email, token: token, password: hash(password) }},
     function (err, response, body) {
       if (!err && response.statusCode == 200) {
-        // Token matched show activate view
+        // Token matched send success
         body = JSON.parse(body);
-        res.redirect("/login?reset=1");
+        res.status(200).json({});
       } else {
-        // Token did not match. Redirect back to login page with error message.
+        // Token did not match. Respond with error message.
         if (err) console.log("Error", err);
-        res.redirect("/login?reset=failed");
+        res.status(403).json({ message: "Activation failed; wrong credentials." });
       }
     });
 });
