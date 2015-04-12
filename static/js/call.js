@@ -11,7 +11,7 @@ window.addEventListener("DOMContentLoaded", function () {
     var callinfo = $("#callInfo"),
         calllink = $("#callLink input[type='text']");
 
-    socket = io.connect("http://localhost:8000/");
+    socket = io.connect("http://conqueror.applait.com:8000/");
 
     socket.on("message", function (message) {
       if (message.type) {
