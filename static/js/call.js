@@ -174,6 +174,18 @@ window.addEventListener("DOMContentLoaded", function () {
     }
   };
 
+  $("#mute").addEventListener("click", function () {
+    if (localstream && localstream.stream){
+      if (localstream.stream.getAudioTracks()[0].enabled) {
+        localstream.stream.getAudioTracks()[0].enabled = false;
+        $("#mute svg use").setAttribute("xlink:href", "#icon-mute");
+      } else {
+        localstream.stream.getAudioTracks()[0].enabled = true;
+        $("#mute svg use").setAttribute("xlink:href", "#icon-unmute");
+      }
+    }
+  });
+
   $("#endCall").addEventListener("click", function () {
     if (room) room.disconnect();
     if (socket) {
