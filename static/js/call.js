@@ -197,4 +197,16 @@ window.addEventListener("DOMContentLoaded", function () {
     location.assign("/app");
   }, false);
 
+  $("#share").addEventListener("click", function () {
+    if (window.MozActivity) {
+      new MozActivity({
+        name: "share",
+        data: {
+          type: "url",
+          url: location.toString()
+        }
+      });
+    } else $("#callLink input[type='text']").click();
+  }, false);
+
 });
