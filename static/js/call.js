@@ -84,8 +84,27 @@ window.addEventListener("DOMContentLoaded", function () {
 
       socket.emit(callmethod, calldata, function (err, data) {
         if (err) {
-          console.log(err);
-          callinfo.innerHTML = "Unable to create call";
+          switch (err.status) {
+          case 401:
+            callinfo.innerHTML = "Invalid data provided. Cannot join/create call.";
+            break;
+          case 403:
+            callinfo.innerHTML = "Either you are already in this call from elsewhere<br>" +
+              "(Or you don't have access to this one.)";
+            break;
+          case 500:
+            callinfo.innerHTML = "Oops! Something went wrong with Grouphone.<br>" +
+              "We've let the ninjas know. Try again after a while";
+            break;
+          default:
+            callinfo.innerHTML = "Unable to create/join call. Grouphone seems busy. Please try again later.";
+          }
+          $("#callLink").classList.add("hide");
+          $("#callActions").classList.add("hide");
+          setTimeout(function () {
+            $("#callLink").parentNode.removeChild($("#callLink"));
+            $("#callActions").parentNode.removeChild($("#callActions"));
+          }, 500);
           return;
         }
 
