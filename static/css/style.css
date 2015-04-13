@@ -155,19 +155,10 @@ button::-moz-focus-inner {
   footer {
     font-size: 2.5rem;
   }
-  #request {
-    font-size: 1.5rem;
-  }
-  .disclaimer {
-    font-size: 2rem;
-  }
 }
 @media screen and (max-width: 480px) {
   html {
     font-size: 8px;
-  }
-  #request {
-    font-size: 2rem;
   }
 }
 @media screen and (max-height: 240px) {} @media screen and (orientation: portrait) {}

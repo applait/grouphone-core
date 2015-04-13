@@ -25,7 +25,8 @@
               var payload = [ "email=", email, "&token=", token, "&password=", password].join("");
               xhr({ url: "/activate", method: "POST", body: payload }, function (status, body, req) {
                 if (status == 200) {
-                  location.assign("/app");
+                  $("#notice").innerHTML = "Password Change Successful<br>Redirecting...";
+                  setTimeout(function () { location.assign("/app") }, 2000);
                 } else $("#notice").innerHTML = (JSON.parse(body)).message;
               });
             }
