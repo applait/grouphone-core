@@ -17,7 +17,9 @@
 
     <nav id="appNav">
       <h1>Grouphone</h1>
-      <a href="/logout" class="pure-button">Logout</a>
+      <% if (user && user.token) { %>
+        <a href="/logout" class="pure-button">Logout</a>
+      <% } %>
     </nav>
 
     <section id="content">

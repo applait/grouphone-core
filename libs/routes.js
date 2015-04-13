@@ -19,12 +19,12 @@ router.get("/", function (req, res) {
 
 // The landing page of the webapp
 router.get("/app", auth, function (req, res) {
-  res.render("app");
+  res.render("app", { user: req.user });
 });
 
 // For a get request, send the sign-in page
 router.get("/login", noauth, function (req, res) {
-  res.render("login");
+  res.render("login", { user: null });
 });
 
 // For a post request, process the given payload
@@ -82,8 +82,11 @@ router.get("/call", auth, function (req, res) {
 });
 
 router.get("/join/:sessionid", function (req, res) {
-  var email = crypto.randomBytes(2).toString("hex") + "@guest.grouphone.me";
-  res.render("call", { sessionid: req.params.sessionid, user: { email: email } });
+  var user = req.user || {};
+  if (!user.email) {
+    user.email = crypto.randomBytes(2).toString("hex") + "@guest.grouphone.me";
+  }
+  res.render("call", { sessionid: req.params.sessionid, user: user });
 });
 
 router.post("/forgot", noauth, function (req, res) {
