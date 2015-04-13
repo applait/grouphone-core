@@ -17,6 +17,15 @@ if (process.argv && process.argv[2]) {
 global.config = config,
 global.approot = __dirname + "/";
 
+// Redirect to non-www
+app.use(function (req, res, next){
+  if (req.headers.host.match(/^www/) !== null ) {
+    res.redirect('http://' + req.headers.host.replace(/^www\./, '') + req.url);
+  } else {
+    next();
+  }
+});
+
 // Configure application
 app.set("view engine", "ejs");
 app.use(bodyParser.json());
