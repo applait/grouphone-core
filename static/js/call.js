@@ -108,6 +108,8 @@ window.addEventListener("DOMContentLoaded", function () {
           return;
         }
 
+        // No error has been hit. Do stuff.
+
         window.onbeforeunload = function () {
           return "Call in progress. Navigating away will end call. You can always press the 'End' button.";
         };
@@ -142,6 +144,8 @@ window.addEventListener("DOMContentLoaded", function () {
             });
             calllink.setAttribute("value", "http://grouphone.me/join/" + data.session.id);
             updatecallinfo();
+            $("#callLink").classList.remove("hide");
+            $("#callActions").classList.remove("hide");
             subscribeall(roomevent.streams);
           });
 
@@ -222,7 +226,7 @@ window.addEventListener("DOMContentLoaded", function () {
         name: "share",
         data: {
           type: "url",
-          url: location.toString()
+          url: $("#callLink input[type='text']").value.trim()
         }
       });
     } else $("#callLink input[type='text']").click();
