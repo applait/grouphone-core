@@ -142,7 +142,7 @@ window.addEventListener("DOMContentLoaded", function () {
                 callinfo.innerHTML = "Unable to publish stream";
               }
             });
-            calllink.setAttribute("value", "http://grouphone.me/join/" + data.session.id);
+            calllink.setAttribute("value", [location.origin, "join", data.session.id].join("/"));
             updatecallinfo();
             $("#callLink").classList.remove("hide");
             $("#callActions").classList.remove("hide");
