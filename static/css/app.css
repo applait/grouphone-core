@@ -26,6 +26,9 @@ html, body {
 }
 
 /* 1. ID & Class */
+.centeredText {
+  text-align: center;
+}
 .pure-form fieldset {
   padding: 2rem 1rem 0;
 }
