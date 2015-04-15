@@ -81,3 +81,6 @@ sftp-config.json
 
 # Prevent committing of /api
 /api/
+
+# Prevent commiting compiled grouphone.js
+/static/js/grouphone.js
