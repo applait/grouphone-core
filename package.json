@@ -4,7 +4,8 @@
   "description": "Web client server for Grouphone",
   "main": "server.js",
   "scripts": {
-    "test": "npm test"
+    "test": "npm test",
+    "make": "./scripts/minify.sh"
   },
   "repository": {
     "type": "git",
@@ -22,9 +23,10 @@
   },
   "dependencies": {
     "body-parser": "^1.12.0",
+    "cookie-parser": "~1.3.4",
     "ejs": "^2.3.1",
     "express": "^4.12.0",
     "request": "~2.55.0",
-    "cookie-parser": "~1.3.4"
+    "uglifyjs": "~2.4.10"
   }
 }
