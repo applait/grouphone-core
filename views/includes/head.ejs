@@ -16,10 +16,12 @@
   <body>
 
     <nav id="appNav">
+    <% if (user && user.token) { %>
       <h1>Grouphone</h1>
-      <% if (user && user.token) { %>
-        <a href="/logout" class="pure-button">Logout</a>
-      <% } %>
+      <a href="/logout" class="pure-button">Logout</a>
+    <% } else { %>
+      <h1 class="centeredText">Grouphone</h1>
+    <% } %>
     </nav>
 
     <section id="content">
