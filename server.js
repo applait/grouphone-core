@@ -19,7 +19,9 @@ global.approot = __dirname + "/";
 
 // Redirect to non-www
 app.use(function (req, res, next){
-  if (req.headers.host.match(/^www/) !== null ) {
+  if (req.headers.host.match(/grouphone\.applait\.com/) !== null) {
+    res.redirect('http://' + req.headers.host.replace(/grouphone\.applait\.com/, 'grouphone.me') + req.url);
+  } else if (req.headers.host.match(/^www/) !== null ) {
     res.redirect('http://' + req.headers.host.replace(/^www\./, '') + req.url);
   } else {
     next();
