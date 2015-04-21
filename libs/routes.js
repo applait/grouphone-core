@@ -122,16 +122,16 @@ router.get("/activate/:token", noauth, function (req, res) {
       if (!err && response.statusCode == 200) {
         // Token matched, show activate view
         body = JSON.parse(body);
-        res.render("activate", { user: body });
+        res.render("activate", { user: body, csrfToken: req.csrfToken });
       } else {
-        // Token did not match. Redirect back to login page with error message.
+        // Token did not match. Show error view
         if (err) console.log("Error", err);
-        res.render("activate", { user: null });
+        res.render("activate", { user: null, csrfToken: req.csrfToken });
       }
     });
 });
 
-router.post("/activate", noauth, function (req, res) {
+router.post("/activate", noauth, csrfVerify, function (req, res) {
 
   var email = req.body && req.body.email && req.body.email.trim();
   var token = req.body && req.body.token && req.body.token.trim();

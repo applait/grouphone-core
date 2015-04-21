@@ -6,6 +6,7 @@
           <input name="email" type="email" placeholder="Email ID" value="<%= user.email %>" readonly>
           <input name="password" type="password" placeholder="Password" class="pure-input-1-2">
           <input name="token" type="hidden" value="<%= user.token %>">
+          <input type="hidden" name="csrf" value="<%= csrfToken %>">
           <input type="button" value="Create new password" class="pure-button pure-button-primary pure-input-1-2" />
         </fieldset>
         <p id="notice">&nbsp;</p>
@@ -17,12 +18,13 @@
 
             var email = $("input[name='email']").value,
                 token = $("input[name='token']").value,
-                password = $("input[name='password']").value
+                password = $("input[name='password']").value,
+                csrf = $("input[name='csrf']").value;
 
             if (!password) {
               $("#notice").innerHTML = "Password Please...";
             } else {
-              var payload = [ "email=", email, "&token=", token, "&password=", password].join("");
+              var payload = [ "email=", email, "&token=", token, "&password=", password, "&csrf=", csrf ].join("");
               xhr({ url: "/activate", method: "POST", body: payload }, function (status, body, req) {
                 if (status == 200) {
                   $("#notice").innerHTML = "Password Change Successful<br>Redirecting...";
