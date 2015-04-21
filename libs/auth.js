@@ -1,4 +1,5 @@
 var request = require("request"),
+    csrflib = require("csrf")(),
     apibase = "http://" + config.API_HOSTNAME + ":" + config.API_PORT;
 
 module.exports = {
@@ -29,5 +30,21 @@ module.exports = {
       return res.redirect("/app");
     }
     next();
+  },
+
+  csrfVerify: function (req, res, next) {
+    if (req.body && req.body.csrf) {
+      if (csrflib.verify(config.SALT, req.body.csrf)) {
+        next();
+      } else {
+        return res.status(403).send("CSRF mismatched");
+      }
+    } else {
+      return res.status(403).send("CSRF protected area");
+    }
+  },
+
+  csrfToken: function () {
+    return csrflib.create(config.SALT);
   }
 };

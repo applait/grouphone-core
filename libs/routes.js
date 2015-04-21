@@ -24,12 +24,12 @@ router.get("/app", auth, function (req, res) {
 
 // For a get request, send the sign-in page
 router.get("/login", noauth, function (req, res) {
-  res.render("login", { user: null });
+  res.render("login", { user: null, csrfToken: req.csrfToken });
 });
 
 // For a post request, process the given payload
 // Send user the /app page on successful login
-router.post("/login", noauth, function (req, res) {
+router.post("/login", noauth, csrfVerify, function (req, res) {
   var email = req.body && req.body.email && req.body.email.trim();
   var password = req.body && req.body.password && req.body.password.trim();
 
@@ -89,7 +89,7 @@ router.get("/join/:sessionid", function (req, res) {
   res.render("call", { sessionid: req.params.sessionid, user: user });
 });
 
-router.post("/forgot", noauth, function (req, res) {
+router.post("/forgot", noauth, csrfVerify, function (req, res) {
   var email = req.body && req.body.email && req.body.email.trim();
 
   if (!email) {

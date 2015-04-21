@@ -4,6 +4,7 @@
     <input name="email" type="email" placeholder="Email ID" class="pure-input-1-2">
     <input name="password" type="password" placeholder="Password" class="pure-input-1-2">
     <input type="button" value="Login to Grouphone" class="pure-button pure-button-primary pure-input-1-2" />
+    <input type="hidden" name="csrf" value="<%= csrfToken %>">
   </fieldset>
   <p id="notice">&nbsp;</p>
   <a id="forgot-button" href="/forgot" class="pure-button">Forgot Password?</a>
@@ -11,18 +12,21 @@
 
 <script>
   window.addEventListener("DOMContentLoaded", function () {
+
+    var csrf = $("input[name='csrf']").value;
+
     $("input[type='button']").addEventListener("click", function (e) {
       e.preventDefault();
 
       var email = $("input[name='email']").value,
-          password = $("input[name='password']").value
+          password = $("input[name='password']").value;
 
       if (!email) {
         $("#notice").innerHTML = "Email Please...";
       } else if (!password) {
         $("#notice").innerHTML = "Password Please...";
       } else {
-        var payload = [ "email=", email, "&password=", password].join("");
+        var payload = [ "email=", email, "&password=", password, "&csrf=", csrf ].join("");
         xhr({ url: "/login", method: "POST", body: payload }, function (status, body, req) {
           if (status == 200) {
             location.assign("/app");
@@ -38,7 +42,8 @@
         $("#notice").innerHTML = "Need your email...";
         emailfield.focus();
       } else {
-        xhr({ url: "/forgot", method: "POST", body: "email=" + emailfield.value }, function (status, body, req) {
+        var payload = [ "email=", emailfield.value, "&csrf=", csrf ].join("");
+        xhr({ url: "/forgot", method: "POST", body: payload }, function (status, body, req) {
           if (status == 200) {
             $("#notice").innerHTML = "Got it... Check your mailbox!";
           } else {
