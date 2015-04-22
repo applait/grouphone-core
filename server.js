@@ -17,6 +17,12 @@ if (process.argv && process.argv[2]) {
 global.config = config,
 global.approot = __dirname + "/";
 
+// Hide the X-Powered-By Header
+app.use(function (req, res, next) {
+  res.setHeader("X-Powered-By", "Grouphone");
+  next();
+});
+
 // Redirect to non-www
 app.use(function (req, res, next){
   if (req.headers.host.match(/grouphone\.applait\.com/) !== null) {
