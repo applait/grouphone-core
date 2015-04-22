@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "npm test",
-    "make": "./scripts/minify.sh"
+    "make": "./scripts/minify.sh",
+    "cert": "./scripts/generatecert.sh"
   },
   "repository": {
     "type": "git",

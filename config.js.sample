@@ -1,15 +1,44 @@
 var config = {
-    ACCEPT_INVITATION: false,
-    APP_IP : "0.0.0.0",
-    APP_PORT: "8080",
-    HOSTNAME: "grouphone.me",
-    MONGO_URL: "mongodb://localhost:27017/grouphone",
-    SALT: "w#e^w7&e*3@w74r32!",
-    MANDRILL_API_KEY: "",
-    SITE_NAME: "Grouphone",
-    SITE_EMAIL: "noreply@grouphone.me",
-    API_HOSTNAME: "api.grouphone.me",
-    API_PORT: "8080"
+
+  // Invitation configuration
+  ACCEPT_INVITATION: false,
+
+  // App environment settings
+  APP_ENV: "DEV", // Can be "DEV", "STAGE", "PROD"
+  APP_IP : "0.0.0.0",
+  SSL_PORT: "8080", // Secure port
+  APP_PORT: "8000", // Non-secure port
+
+  // App meta settings
+  SITE_NAME: "Grouphone",
+  SITE_EMAIL: "me@example.com",
+
+  // App hostname
+  HOSTNAME: "localhost",
+
+  // Grouphone API settings
+  API_HOSTNAME: "localhost",
+  API_PORT: "8081",
+
+  // DB
+  MONGO_URL: "mongodb://localhost:27017/grouphone",
+
+  // Security
+  SALT: "saltythingshere",
+  MANDRILL_API_KEY: "",
+
+  // SSL Certificate settings
+  SSL_KEY: "./infosec/key.pem",
+  SSL_CERT: "./infosec/cert.pem",
+  SSL_PASSPHRASE: ""
+
 };
+
+// Don't edit below
+if (config.APP_ENV === "DEV") {
+  config.HOST = [config.HOSTNAME, config.SSL_PORT].join(":");
+} else {
+  config.HOST = config.HOSTNAME;
+}
 
 module.exports = config;

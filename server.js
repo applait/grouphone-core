@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 
 var express = require("express"),
+    http = require("http"),
+    https = require("https"),
+    fs = require("fs"),
     path = require("path"),
     bodyParser = require("body-parser"),
     cookieParser = require("cookie-parser"),
@@ -26,9 +29,9 @@ app.use(function (req, res, next) {
 // Redirect to non-www
 app.use(function (req, res, next){
   if (req.headers.host.match(/grouphone\.applait\.com/) !== null) {
-    res.redirect('http://' + req.headers.host.replace(/grouphone\.applait\.com/, 'grouphone.me') + req.url);
+    res.redirect(301, 'https://' + req.headers.host.replace(/grouphone\.applait\.com/, 'grouphone.me') + req.url);
   } else if (req.headers.host.match(/^www/) !== null ) {
-    res.redirect('http://' + req.headers.host.replace(/^www\./, '') + req.url);
+    res.redirect(301, 'https://' + req.headers.host.replace(/^www\./, '') + req.url);
   } else {
     next();
   }
@@ -66,8 +69,23 @@ app.use(function (req, res, next) {
 app.use("/", express.static(path.join(__dirname, "static")));
 app.use("/", require("./libs/routes"));
 
-// Start the server
-var server = app.listen(config.APP_PORT, config.APP_IP, function () {
-    console.log("Starting Grouphone Web client server...");
-    console.log("Listening on port %s:%d", config.APP_IP, config.APP_PORT);
+// Set https options
+var https_options = {
+  key: fs.readFileSync(config.SSL_KEY),
+  cert: fs.readFileSync(config.SSL_CERT),
+  passphrase: config.SSL_PASSPHRASE
+};
+
+// Start the secure server
+var server = https.createServer(https_options, app).listen(config.SSL_PORT, config.APP_IP, function () {
+  console.log("Starting Grouphone Web client server...");
+  console.log("Listening on %s:%d", config.APP_IP, config.SSL_PORT);
+});
+
+// Start non-secure redirection server
+http.createServer(function (req, res) {
+  res.writeHead(301, { "Location": "https://" + config.HOST + req.url });
+  res.end();
+}).listen(config.APP_PORT, config.APP_IP, function () {
+  console.log("Started non-secure redirection server on %s:%d", config.APP_IP, config.APP_PORT);
 });
