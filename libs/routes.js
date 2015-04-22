@@ -169,7 +169,7 @@ router.post("/activate", noauth, csrfVerify, function (req, res) {
   // Query to see if token is valid API
   request.post(
     { url: apibase + "/api/passwd/",
-      form: { email: email, token: token, password: hash(password) }},
+      form: { email: email, token: token, password: hash(decryptAES(password)) }},
     function (err, response, body) {
       if (!err && response.statusCode == 200) {
         // Token matched send success
