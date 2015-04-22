@@ -21,16 +21,7 @@
       var email = $("input[name='email']").value,
           password = $("input[name='password']").value;
 
-      var key = CryptoJS.MD5(csrf).toString();
-      var iv = key.substr(0, 16);
-
-      var encrypt = CryptoJS.AES.encrypt(password, key, { iv: iv });
-
-      var password_base64 = encodeURIComponent([
-        encrypt.ciphertext.toString(CryptoJS.enc.Base64),
-        encrypt.key.toString(CryptoJS.enc.Base64),
-        encrypt.iv.toString(CryptoJS.enc.Base64)
-      ].join(","));
+      var password_base64 = encodeURIComponent(CryptoJS.HmacSHA1(password, email).toString(CryptoJS.enc.Base64));
 
       if (!email) {
         $("#notice").innerHTML = "Email Please...";

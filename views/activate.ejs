@@ -24,16 +24,7 @@
             if (!password) {
               $("#notice").innerHTML = "Password Please...";
             } else {
-              var key = CryptoJS.MD5(csrf).toString();
-              var iv = key.substr(0, 16);
-
-              var encrypt = CryptoJS.AES.encrypt(password, key, { iv: iv });
-
-              var password_base64 = encodeURIComponent([
-                encrypt.ciphertext.toString(CryptoJS.enc.Base64),
-                encrypt.key.toString(CryptoJS.enc.Base64),
-                encrypt.iv.toString(CryptoJS.enc.Base64)
-              ].join(","));
+              var password_base64 = encodeURIComponent(CryptoJS.HmacSHA1(password, email).toString(CryptoJS.enc.Base64));
 
               var payload = [ "email=", email, "&token=", token, "&password=", password_base64,
                               "&csrf=", csrf ].join("");

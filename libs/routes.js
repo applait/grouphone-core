@@ -12,28 +12,8 @@ var hash = function (string) {
   return crypto.createHmac("sha1", config.SALT).update(string).digest("hex");
 };
 
-/**
- * Decrypt encrypted AES password string
- *
- * @param {string} pwstring - A string built by URI encoding of comma-separated concatenation of the
- * `ciphertext`, `key` and `iv` of a string encypted using AES-256-CBC.
- */
-var decryptAES = function (pwstring) {
-  var dec = "";
-  pwstring = decodeURIComponent(pwstring).split(",");
-  if (pwstring.length === 3) {
-    try {
-      var decipher = crypto.createDecipheriv("aes-256-cbc",
-                                           new Buffer(pwstring[1], "base64"),
-                                           new Buffer(pwstring[2], "base64"));
-      dec = decipher.update(new Buffer(pwstring[0], "base64"), "base64", "utf8");
-      dec += decipher.final("utf8");
-    } catch (e) {
-      console.log("Unable to decrypt");
-      return "";
-    }
-  }
-  return dec;
+var base64decode = function (string) {
+  return new Buffer(decodeURIComponent(string), "base64").toString("hex");
 };
 
 // The landing page of the website
@@ -61,12 +41,10 @@ router.post("/login", noauth, csrfVerify, function (req, res) {
     return res.status(401).json({ message: "Login failed; malformed request." });
   }
 
-  password = hash(decryptAES(password));
-
   // Query the login API
   request.post(
     { url: apibase + "/api/login",
-      form: { email: email, password: password }},
+      form: { email: email, password: hash(base64decode(password)) }},
     function (err, response, body) {
       if (!err && response.statusCode == 200) {
         // User credentials matched. Create session. Redirect to app landing page.
@@ -169,7 +147,7 @@ router.post("/activate", noauth, csrfVerify, function (req, res) {
   // Query to see if token is valid API
   request.post(
     { url: apibase + "/api/passwd/",
-      form: { email: email, token: token, password: hash(decryptAES(password)) }},
+      form: { email: email, token: token, password: hash(base64decode(password)) }},
     function (err, response, body) {
       if (!err && response.statusCode == 200) {
         // Token matched send success
