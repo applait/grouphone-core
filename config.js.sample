@@ -25,7 +25,6 @@ var config = {
 
   // Security
   SALT: "saltythingshere",
-  MANDRILL_API_KEY: "",
 
   // SSL Certificate settings
   SSL_KEY: "./infosec/key.pem",
