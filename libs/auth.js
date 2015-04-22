@@ -14,6 +14,8 @@ module.exports = {
           body = JSON.parse(body);
 
           if (body.session) {
+            res.setHeader("Cache-Control", "no-store");
+            res.setHeader("Pragma", "no-cache");
             next();
           } else {
             res.redirect("/logout");
