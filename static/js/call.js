@@ -214,10 +214,13 @@ window.addEventListener("DOMContentLoaded", function () {
     if (socket) {
       socket.emit("call:disconnect", { sessionid: sessionid, username: username }, function () {
         socket.disconnect();
+        window.onbeforeunload = null;
+        location.assign("/app");
       });
+    } else {
+      window.onbeforeunload = null;
+      location.assign("/app");
     }
-    window.onbeforeunload = null;
-    location.assign("/app");
   }, false);
 
   $("#share").addEventListener("click", function () {
