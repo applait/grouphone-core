@@ -36,6 +36,18 @@ window.addEventListener("DOMContentLoaded", function () {
       updatecallinfo();
     });
 
+    socket.on("call:ended", function () {
+      if (localstream) localstream.close();
+      if (room) room.disconnect();
+      if (socket) socket.disconnect();
+      callinfo.innerHTML = "Call ended by call creator";
+      calllink.value = "...";
+      window.onbeforeunload = null;
+      room = socket = localstream = null;
+      $("#mute").classList.add("hide");
+      $("#share").classList.add("hide");
+    });
+
     var updatecallinfo = function () {
       var infoString = ["In call with", creator.name];
       if ((membercount - 2) > 0) {
@@ -54,7 +66,7 @@ window.addEventListener("DOMContentLoaded", function () {
         createcall();
       } else {
         // Try reconnecting here
-        callinfo.innerHTML = "Reconnecting...";
+        callinfo.innerHTML = "Call dropped.";
       }
     };
 
@@ -93,8 +105,7 @@ window.addEventListener("DOMContentLoaded", function () {
               "(Or you don't have access to this one.)";
             break;
           case 500:
-            callinfo.innerHTML = "Oops! Something went wrong with Grouphone.<br>" +
-              "We've let the ninjas know. Try again after a while";
+            callinfo.innerHTML = "Oops! Probably this call has ended.<br>Or, maybe, Grouphone is taking a nap.";
             break;
           default:
             callinfo.innerHTML = "Unable to create/join call. Grouphone seems busy. Please try again later.";
@@ -109,6 +120,7 @@ window.addEventListener("DOMContentLoaded", function () {
         }
 
         // No error has been hit. Do stuff.
+        sessionid = data.session.id;
 
         window.onbeforeunload = function () {
           return "Call in progress. Navigating away will end call. You can always press the 'End' button.";
@@ -212,7 +224,7 @@ window.addEventListener("DOMContentLoaded", function () {
   $("#endCall").addEventListener("click", function () {
     if (room) room.disconnect();
     if (socket) {
-      socket.emit("call:disconnect", { sessionid: sessionid, username: username }, function () {
+      socket.emit("call:disconnect", { sessionid: sessionid, username: username }, function (err, sess) {
         socket.disconnect();
         window.onbeforeunload = null;
         location.assign("/app");
