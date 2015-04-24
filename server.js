@@ -19,6 +19,7 @@ if (process.argv && process.argv[2]) {
 // Set useful globals
 global.config = config,
 global.approot = __dirname + "/";
+global.utils = require("./libs/utils");
 
 // Hide the X-Powered-By Header
 app.use(function (req, res, next) {
@@ -43,12 +44,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser(config.SALT));
 
-// Set middlewares
-var authlib = require("./libs/auth");
-global.auth = authlib.auth;
-global.noauth = authlib.noauth;
-global.csrfVerify = authlib.csrfVerify;
-
 // Middleware to populate `req.user` with user information.
 // If `req.user` is set with `email` and `token` properties, then the user is logged in.
 // For users who are not logged in, `req.user` is set to `null`.
@@ -61,7 +56,7 @@ app.use(function (req, res, next) {
   } else {
     req.user = null;
   }
-  req.csrfToken = authlib.csrfToken();
+  req.csrfToken = utils.csrfToken();
   next();
 });
 
