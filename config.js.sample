@@ -17,8 +17,7 @@ var config = {
   HOSTNAME: "localhost",
 
   // Grouphone API settings
-  API_HOSTNAME: "localhost",
-  API_PORT: "8081",
+  API_PATH: "http://localhost:8081",
 
   // DB
   MONGO_URL: "mongodb://localhost:27017/grouphone",
