@@ -19,9 +19,6 @@ var config = {
   // Grouphone API settings
   API_PATH: "http://localhost:8081",
 
-  // DB
-  MONGO_URL: "mongodb://localhost:27017/grouphone",
-
   // Security
   SALT: "saltythingshere",
 
