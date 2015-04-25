@@ -71,6 +71,9 @@ var https_options = {
   passphrase: config.SSL_PASSPHRASE
 };
 
+// Disable TLS authorization check so that we can use self-signed cert for the Grouphone API
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
 // Start the secure server
 var server = https.createServer(https_options, app).listen(config.SSL_PORT, config.APP_IP, function () {
   console.log("Starting Grouphone Web client server...");
