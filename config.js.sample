@@ -19,6 +19,9 @@ var config = {
   // Grouphone API settings
   API_PATH: "https://localhost:8081",
 
+  // Conqueror path
+  CONQUEROR_PATH: "http://conqueror.applait.com:8000/",
+
   // Security
   SALT: "saltythingshere",
 
