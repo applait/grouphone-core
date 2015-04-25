@@ -17,7 +17,7 @@ var config = {
   HOSTNAME: "localhost",
 
   // Grouphone API settings
-  API_PATH: "http://localhost:8081",
+  API_PATH: "https://localhost:8081",
 
   // Security
   SALT: "saltythingshere",
