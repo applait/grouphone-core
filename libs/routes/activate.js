@@ -32,7 +32,7 @@ router.post("/", utils.noauth, utils.csrfVerify, function (req, res) {
   // Query to see if token is valid API
   request.post(
     { url: config.API_PATH + "/passwd/",
-      form: { email: email, token: token, password: hash(base64decode(password)) }},
+      form: { email: email, token: token, password: utils.hash(utils.base64decode(password)) }},
     function (err, response, body) {
       if (!err && response.statusCode == 200) {
         // Token matched send success
