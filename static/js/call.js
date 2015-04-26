@@ -11,7 +11,7 @@ window.addEventListener("DOMContentLoaded", function () {
     var callinfo = $("#callInfo"),
         calllink = $("#callLink input[type='text']");
 
-    socket = io.connect(conqueror_path);
+    socket = io.connect(conqueror_path, { secure: true });
 
     socket.on("message", function (message) {
       if (message.type) {
