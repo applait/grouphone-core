@@ -1,4 +1,5 @@
-var router = require("express").Router();
+var router = require("express").Router(),
+    crypto = require("crypto");
 
 router.get("/:sessionid", function (req, res) {
   var user = req.user || {};
