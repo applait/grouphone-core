@@ -6,8 +6,7 @@ var config = {
   // App environment settings
   APP_ENV: "DEV", // Can be "DEV", "STAGE", "PROD"
   APP_IP : "0.0.0.0",
-  SSL_PORT: "8080", // Secure port
-  APP_PORT: "8000", // Non-secure port
+  APP_PORT: "8080", // Secure port
 
   // App meta settings
   SITE_NAME: "Grouphone",

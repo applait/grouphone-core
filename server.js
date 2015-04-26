@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 var express = require("express"),
-    http = require("http"),
     https = require("https"),
     fs = require("fs"),
     path = require("path"),
@@ -75,15 +74,7 @@ var https_options = {
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 // Start the secure server
-var server = https.createServer(https_options, app).listen(config.SSL_PORT, config.APP_IP, function () {
-  console.log("Starting Grouphone Web client server...");
-  console.log("Listening on %s:%d", config.APP_IP, config.SSL_PORT);
-});
-
-// Start non-secure redirection server
-http.createServer(function (req, res) {
-  res.writeHead(301, { "Location": "https://" + config.HOST + req.url });
-  res.end();
-}).listen(config.APP_PORT, config.APP_IP, function () {
-  console.log("Started non-secure redirection server on %s:%d", config.APP_IP, config.APP_PORT);
+var server = https.createServer(https_options, app).listen(config.APP_PORT, config.APP_IP, function () {
+  console.log("Starting Grouphone Web client secure server...");
+  console.log("Listening on %s:%d", config.APP_IP, config.APP_PORT);
 });
