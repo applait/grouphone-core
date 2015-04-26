@@ -18,7 +18,7 @@ router.post("/", utils.noauth, utils.csrfVerify, function (req, res) {
 
   // Query the login API
   request.post(
-    { url: config.API_PATH + "/api/login",
+    { url: config.API_PATH + "/login",
       form: { email: email, password: utils.hash(utils.base64decode(password)) }},
     function (err, response, body) {
       if (!err && response.statusCode == 200) {

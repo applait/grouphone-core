@@ -5,7 +5,7 @@ var request = require("request"),
 module.exports = {
   auth: function (req, res, next) {
     if (req.user && req.user.email && req.user.token) {
-      request(config.API_PATH + "/api/verify/" + req.user.email + "/" + req.user.token, function (err, resp, body) {
+      request(config.API_PATH + "/verify/" + req.user.email + "/" + req.user.token, function (err, resp, body) {
         if (err) {
           console.log("error", err);
           return res.redirect("/logout");

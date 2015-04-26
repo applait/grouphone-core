@@ -4,7 +4,7 @@ var router = require("express").Router(),
 router.get("/", function (req, res) {
   if (req.user) {
   request.get(
-    config.API_PATH + "/api/logout",
+    config.API_PATH + "/logout",
     { qs: { email: req.user.email, token: req.user.token }},
     function (err, response, body) {
       if (err) return res.redirect("/app");

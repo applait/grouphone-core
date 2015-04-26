@@ -10,7 +10,7 @@ router.post("/", utils.noauth, utils.csrfVerify, function (req, res) {
 
   // Query the forgot API
   request.post(
-    { url: config.API_PATH + "/api/forgot",
+    { url: config.API_PATH + "/forgot",
       form: { email: email }},
     function (err, response, body) {
       if (!err && response.statusCode == 200) {

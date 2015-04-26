@@ -5,7 +5,7 @@ router.get("/:token", utils.noauth, function (req, res) {
 
   // Query to see if token is valid API
   request.get(
-    { url: config.API_PATH + "/api/passwd/" + req.params.token },
+    { url: config.API_PATH + "/passwd/" + req.params.token },
     function (err, response, body) {
       if (!err && response.statusCode == 200) {
         // Token matched, show activate view
@@ -31,7 +31,7 @@ router.post("/", utils.noauth, utils.csrfVerify, function (req, res) {
 
   // Query to see if token is valid API
   request.post(
-    { url: config.API_PATH + "/api/passwd/",
+    { url: config.API_PATH + "/passwd/",
       form: { email: email, token: token, password: hash(base64decode(password)) }},
     function (err, response, body) {
       if (!err && response.statusCode == 200) {
