@@ -26,17 +26,6 @@ app.use(function (req, res, next) {
   next();
 });
 
-// Redirect to non-www
-app.use(function (req, res, next){
-  if (req.headers.host.match(/grouphone\.applait\.com/) !== null) {
-    res.redirect(301, 'https://' + req.headers.host.replace(/grouphone\.applait\.com/, 'grouphone.me') + req.url);
-  } else if (req.headers.host.match(/^www/) !== null ) {
-    res.redirect(301, 'https://' + req.headers.host.replace(/^www\./, '') + req.url);
-  } else {
-    next();
-  }
-});
-
 // Configure application
 app.set("view engine", "ejs");
 app.use(bodyParser.json());
