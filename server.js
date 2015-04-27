@@ -1,5 +1,24 @@
 #!/usr/bin/env node
 
+/**
+ * Grouphone Web client server main script
+ *
+ * This script starts the Grouphone Web client server by loading in all the required dependencies. This is the first
+ * point of entry for the application.
+ *
+ * Here are the thing it does:
+ *
+ * - require-s all the dependencies
+ * - Prepares an `expressjs` `app` instance
+ * - Sets globals that can be accessed throughout the application.
+ * - Sets up authentication middlewares
+ * - Configures the ExpressJS server instance
+ * - Mounts the `./static` directory as a static file server on the web root
+ * - Mounts the `./libs/routes` module
+ * - Sets up a https server using security configurations specified in `config.js`
+ */
+
+// Require dependencies
 var express = require("express"),
     https = require("https"),
     fs = require("fs"),
@@ -8,6 +27,7 @@ var express = require("express"),
     cookieParser = require("cookie-parser"),
     config = require("./config");
 
+// Instantiate express app
 var app = express();
 
 // Override port from third commandline argument, if present
@@ -15,7 +35,7 @@ if (process.argv && process.argv[2]) {
     config.APP_PORT = parseInt(process.argv[2]);
 }
 
-// Set useful globals
+// Set useful globals. These globals are accessible as `config`, `approot` and `utils` from the routes and views.
 global.config = config,
 global.approot = __dirname + "/";
 global.utils = require("./libs/utils");
@@ -26,10 +46,15 @@ app.use(function (req, res, next) {
   next();
 });
 
-// Configure application
+// -- Configure application --
+// Set view engine to ejs
 app.set("view engine", "ejs");
+
+// Enable body-parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// Enable cookie-parser with the salt specified in the config
 app.use(cookieParser(config.SALT));
 
 // Middleware to populate `req.user` with user information.
@@ -48,9 +73,9 @@ app.use(function (req, res, next) {
   next();
 });
 
-// Register routes
-app.use("/", express.static(path.join(__dirname, "static")));
-app.use("/", require("./libs/routes"));
+// -- Register routes --
+app.use("/", express.static(path.join(__dirname, "static"))); // Mounts the ./static directory on root
+app.use("/", require("./libs/routes")); // Mounts the routes
 
 // Set https options
 var https_options = {
