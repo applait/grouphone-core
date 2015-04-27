@@ -15,6 +15,7 @@ No data is stored on this layer. The Grouphone API and the Grouphone media serve
 ## Directory organization
 
 - `./`- The root of the project includes `.gitignore`, `README.md`, `config.js.sample`, `package.json` and `server.js`.
+- `./docs` - Developer documentation lives here.
 - `./infosec`: Meant to store information security related things, like ssl certificates.
 - `./libs`: The main action happens here.
     - `./routes`: The routes module handles all the publicly exposed routes. Take a look at `routes/index.js` to find out on what path each of them are mounted.
