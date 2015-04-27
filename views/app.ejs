@@ -5,16 +5,21 @@
         Create<br/>Call
       </button>
       <p>[ Headphones Recommended ]</p>
-      <a
-        class="pure-button pure-button-primary"
-        href="mailto:feedback+app@grouphone.me">
-        feedback+app@grouphone.me
-      </a>
+      <button id="feedback" class="pure-button pure-button-primary">Got Feedback?</button>
 
       <script>
         window.addEventListener("DOMContentLoaded", function (e) {
           $("#createCall").addEventListener("click", function (event) {
             location.assign("/call");
+          }, false);
+
+          $("#feedback").addEventListener("click", function (event) {
+            window.scrollback = { streams: ["grouphone"], host: "https://scrollback.io" };
+            var script = document.createElement("script");
+            script.async=1; script.src="https://scrollback.io/client.min.js";
+            $("head").appendChild(script);
+            $("#content").removeChild($("#feedback"));
+            $(".appbar-title").innerHTML = "Show/Hide";
           }, false);
         }, false);
       </script>
