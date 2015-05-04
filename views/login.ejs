@@ -3,11 +3,13 @@
   <fieldset class="pure-group">
     <input name="email" type="email" placeholder="Email ID" class="pure-input-1-2">
     <input name="password" type="password" placeholder="Password" class="pure-input-1-2">
-    <input type="button" value="Login to Grouphone" class="pure-button pure-button-primary pure-input-1-2" />
     <input type="hidden" name="csrf" value="<%= csrfToken %>">
+    <input type="button" value="Login to Grouphone" class="pure-button pure-button-primary pure-input-1-4" />
   </fieldset>
+
   <p id="notice">&nbsp;</p>
-  <a id="forgot-button" href="/forgot" class="pure-button">Forgot Password?</a>
+  <p><a id="forgot-button" href="/forgot" class="pure-button">Forgot Password?</a></p>
+  <p><a id="invite-button" href="#" class="button-text">Request invite!</a></p>
 </form>
 
 <script>
@@ -24,8 +26,10 @@
       var password_base64 = encodeURIComponent(CryptoJS.HmacSHA1(password, email).toString(CryptoJS.enc.Base64));
 
       if (!email) {
+        $("#notice").classList.remove("green");
         $("#notice").innerHTML = "Email Please...";
       } else if (!password) {
+        $("#notice").classList.remove("green");
         $("#notice").innerHTML = "Password Please...";
       } else {
         var payload = [ "email=", email, "&password=", password_base64, "&csrf=", csrf ].join("");
@@ -39,6 +43,7 @@
             } catch (e) {
               parsed = { message: "Error logging in." }
             }
+            $("#notice").classList.remove("green");
             $("#notice").innerHTML = parsed.message;
           };
         });
@@ -49,14 +54,37 @@
       e.preventDefault();
       var emailfield = $("input[name='email']");
       if (!emailfield.value) {
+        $("#notice").classList.remove("green");
         $("#notice").innerHTML = "Need your email...";
         emailfield.focus();
       } else {
         var payload = [ "email=", emailfield.value, "&csrf=", csrf ].join("");
         xhr({ url: "/forgot", method: "POST", body: payload }, function (status, body, req) {
           if (status == 200) {
+            $("#notice").classList.add("green");
             $("#notice").innerHTML = "Got it... Check your mailbox!";
           } else {
+            $("#notice").classList.remove("green");
+            $("#notice").innerHTML = (JSON.parse(body)).message;
+          }
+        });
+      }
+    }, false);
+
+    $("#invite-button").addEventListener("click", function (e) {
+      e.preventDefault();
+      var emailfield = $("input[name='email']");
+      if (!emailfield.value) {
+        $("#notice").innerHTML = "Need your email...";
+        emailfield.focus();
+      } else {
+        var payload = [ "email=", emailfield.value, "&csrf=", csrf ].join("");
+        xhr({ url: "/invite", method: "POST", body: payload }, function (status, body, req) {
+          if (status == 200) {
+            $("#notice").classList.add("green");
+            $("#notice").innerHTML = (JSON.parse(body)).message;
+          } else {
+            $("#notice").classList.remove("green");
             $("#notice").innerHTML = (JSON.parse(body)).message;
           }
         });

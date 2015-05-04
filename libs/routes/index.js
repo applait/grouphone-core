@@ -11,12 +11,13 @@ router.get("/", function (req, res) {
 });
 
 // Setup routes
-router.use("/app", require("./app.js"));
-router.use("/login", require("./login.js"));
-router.use("/logout", require("./logout.js"));
-router.use("/call", require("./call.js"));
-router.use("/join", require("./join.js"));
-router.use("/forgot", require("./forgot.js"));
-router.use("/activate", require("./activate.js"));
+router.use("/app", require("./app"));
+router.use("/login", require("./login"));
+router.use("/logout", require("./logout"));
+router.use("/call", require("./call"));
+router.use("/join", require("./join"));
+router.use("/forgot", require("./forgot"));
+router.use("/activate", require("./activate"));
+router.use("/invite", require("./invite"));
 
 module.exports = router;
