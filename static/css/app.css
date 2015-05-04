@@ -71,6 +71,12 @@ html, body {
   font-size: 2rem;
   font-weight: 300;
 }
+#appNav h1 a {
+  color: #ff4e00;
+  text-decoration: none;
+  font-size: inherit;
+  font-weight: inherit;
+}
 #notice {
   padding: 0 1rem;
   color: #c00;
