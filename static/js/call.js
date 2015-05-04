@@ -200,14 +200,14 @@ window.addEventListener("DOMContentLoaded", function () {
 
   // Start call
   initcall(sessionid);
-  window.onunload = function () {
+  window.addEventListener("beforeunload", function (e) {
     if (room) room.disconnect();
     if (socket) {
       socket.emit("call:disconnect", { sessionid: sessionid, username: username }, function () {
         socket.disconnect();
       });
     }
-  };
+  });
 
   $("#mute").addEventListener("click", function () {
     if (localstream && localstream.stream){
