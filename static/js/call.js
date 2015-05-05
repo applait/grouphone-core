@@ -47,6 +47,7 @@ window.addEventListener("DOMContentLoaded", function () {
       room = socket = localstream = null;
       $("#mute").classList.add("hide");
       $("#share").classList.add("hide");
+      document.title = "[OFF AIR] " + pagetitle;
     });
 
     var updatecallinfo = function () {
