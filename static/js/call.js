@@ -5,6 +5,7 @@ window.addEventListener("DOMContentLoaded", function () {
   var socket = null;
   var membercount = 0;
   var creator;
+  var pagetitle = document.title;
 
   var initcall = function () {
 
@@ -49,16 +50,21 @@ window.addEventListener("DOMContentLoaded", function () {
     });
 
     var updatecallinfo = function () {
-      var infoString = ["In call with", creator.name];
-      if ((membercount - 2) > 0) {
-        infoString.push("<br>and", (membercount - 2));
-        if ((membercount - 2) == 1) {
+      var infoString = ["Call by", creator.name];
+      if ((membercount - 1) > 0) {
+        infoString.push("<br>and", (membercount - 1));
+        if ((membercount - 1) == 1) {
           infoString.push("other");
         } else {
           infoString.push("others");
         }
       }
       callinfo.innerHTML = infoString.join(" ");
+      if (membercount - 1 < 1) {
+        document.title = "[ON AIR] " + pagetitle;
+      } else {
+        document.title = "(" + (membercount - 1) + ") [ON AIR] " + pagetitle;
+      }
     };
 
     var checkcall = function () {
@@ -121,6 +127,7 @@ window.addEventListener("DOMContentLoaded", function () {
 
         // No error has been hit. Do stuff.
         sessionid = data.session.id;
+        socket.emit("call:data", { sessionid: sessionid, username: username });
 
         window.onbeforeunload = function () {
           return "Call in progress. Navigating away will end call. You can always press the 'End' button.";
@@ -200,14 +207,6 @@ window.addEventListener("DOMContentLoaded", function () {
 
   // Start call
   initcall(sessionid);
-  window.addEventListener("beforeunload", function (e) {
-    if (room) room.disconnect();
-    if (socket) {
-      socket.emit("call:disconnect", { sessionid: sessionid, username: username }, function () {
-        socket.disconnect();
-      });
-    }
-  });
 
   $("#mute").addEventListener("click", function () {
     if (localstream && localstream.stream){
