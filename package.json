@@ -1,6 +1,6 @@
 {
   "name": "grouphone",
-  "version": "0.0.1",
+  "version": "1.0.0-beta2",
   "description": "Web client server for Grouphone",
   "main": "server.js",
   "scripts": {
