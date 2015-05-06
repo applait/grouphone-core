@@ -10,6 +10,12 @@ router.get("/", function (req, res) {
   res.status(200).sendFile(approot + "static/index.html");
 });
 
+// Serve manifest.webapp
+router.get("/manifest.webapp", function (req, res) {
+  res.setHeader("Content-Type", "application/x-web-app-manifest+json");
+  res.status(200).sendFile(approot + "static/manifest.webapp");
+});
+
 // Setup routes
 router.use("/app", require("./app"));
 router.use("/login", require("./login"));
