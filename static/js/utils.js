@@ -44,3 +44,20 @@ var $ = function (sel) {
 var $$ = function (sel) {
   return document.querySelectorAll(sel);
 };
+
+/**
+ * Firefox app installation trigger
+ */
+if (navigator.mozApps && navigator.mozApps.install) {
+  var manifest = location.href + "static/manifest.webapp",
+      check = navigator.mozApps.checkInstalled(manifest);
+
+  check.onsuccess = function (event) {
+    if (!check.result) {
+      var install = navigator.mozApps.install(manifest);
+      install.onerror = function () {
+        console.log('Installation Failed. Error: ' + this.error.name);
+      }
+    }
+  }
+}
