@@ -24,6 +24,8 @@
   },
   "activities": {
     "view": {
+      "href": "/callhandler",
+      "disposition": "window",
       "filters": {
         "type": "url",
         "url": {
