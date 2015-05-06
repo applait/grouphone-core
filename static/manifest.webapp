@@ -28,8 +28,8 @@
         "type": "url",
         "url": {
           "required": true,
-          "pattern": "^https:\/\/grouphone\.me\/",
-          "regexp": "^https:\/\/grouphone\.me\/"
+          "pattern": "^https:\/\/grouphone.me\/",
+          "regexp": "^https:\/\/grouphone.me\/"
         }
       }
     }
