@@ -49,7 +49,7 @@ var $$ = function (sel) {
  * Firefox app installation trigger
  */
 if (navigator.mozApps && navigator.mozApps.install) {
-  var manifest = location.href + "static/manifest.webapp",
+  var manifest = "https://grouphone.me/manifest.webapp",
       check = navigator.mozApps.checkInstalled(manifest);
 
   check.onsuccess = function (event) {
