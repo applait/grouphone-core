@@ -7,8 +7,8 @@
        navigator.mozSetMessageHandler('activity', function(activityRequest) {
          var option = activityRequest.source;
 
-         if (options.data && options.data.url) {
-           location.assign(options.data.url);
+         if (option.data && option.data.url) {
+           location.assign(option.data.url);
          }
        });
      } else {
