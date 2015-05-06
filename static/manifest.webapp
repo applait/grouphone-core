@@ -1,39 +1,40 @@
 {
-    "version": "1.0.0",
-    "name": "Grouphone",
-    "description": "Group calls for Firefox OS",
-    "launch_path": "/app",
-    "icons": {
-        "48": "/img/icons/48.png",
-        "60": "/img/icons/60.png",
-        "128": "/img/icons/128.png",
-        "512": "/img/icons/512.png"
+  "version": "1.0.0",
+  "name": "Grouphone",
+  "description": "Group calls for Firefox OS",
+  "launch_path": "/app",
+  "icons": {
+    "60": "/static/img/logo-60.png",
+    "128": "/static/img/logo-128.png",
+    "512": "/static/img/logo-512.png"
+  },
+  "developer": {
+    "name": "Applait",
+    "url": "http://applait.com"
+  },
+  "type": "web",
+  "appcache_path": "/static/manifest.appcache",
+  "permissions": {
+    "audio-capture": {
+      "description": "Obtain MediaStream from microphone"
     },
-    "developer": {
-        "name": "Applait",
-        "url": "http://applait.com"
-    },
-    "type": "web",
-    "appcache_path": "/manifest.appcache",
-    "permissions": {
-        "audio-channel-normal": {
-            "description": "Enable audio for Calls"
-        }
-    },
-    "installs_allowed_from": [
-        "*"
-    ],
-    "default_locale": "en",
-    "activities": {
-        "share": {
-            "href": "",
-            "disposition": "inline",
-            "filters": {
-                "type": [
-                    ""
-                ]
-            },
-            "returnValue": true
-        }
+    "audio-channel-normal": {
+      "description": "UI sounds"
     }
+  },
+  "activities": {
+    "view": {
+      "filters": {
+        "type": "url",
+        "url": {
+          "required": true,
+          "regexp":"/^https:\/\/grouphone\.me\//"
+        }
+      }
+    }
+  },
+  "installs_allowed_from": [
+    "https://grouphone.me"
+  ],
+  "default_locale": "en"
 }
