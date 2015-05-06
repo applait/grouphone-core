@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0",
+  "version": "1.0.0-beta2",
   "name": "Grouphone",
   "description": "Group calls for Firefox OS",
   "launch_path": "/app",
@@ -34,7 +34,7 @@
     }
   },
   "installs_allowed_from": [
-    "https://grouphone.me"
+    "*"
   ],
   "default_locale": "en"
 }
