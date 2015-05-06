@@ -1,19 +1,19 @@
 {
   "version": "1.0.0-beta2",
   "name": "Grouphone",
-  "description": "Group calls for Firefox OS",
+  "description": "Group audio calls, powered by the web",
   "launch_path": "/app",
   "icons": {
-    "60": "/static/img/logo-60.png",
-    "128": "/static/img/logo-128.png",
-    "512": "/static/img/logo-512.png"
+    "60": "/img/logo-60.png",
+    "128": "/img/logo-128.png",
+    "512": "/img/logo-512.png"
   },
   "developer": {
     "name": "Applait",
     "url": "http://applait.com"
   },
   "type": "web",
-  "appcache_path": "/static/manifest.appcache",
+  "appcache_path": "/manifest.appcache",
   "permissions": {
     "audio-capture": {
       "description": "Obtain MediaStream from microphone"
