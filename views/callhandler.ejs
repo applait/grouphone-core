@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+  <head></head>
+  <body>
+    <script>
+     if (navigator.mozSetMessageHandler) {
+       navigator.mozSetMessageHandler('activity', function(activityRequest) {
+         var option = activityRequest.source;
+
+         console.log(option.data);
+       });
+     } else {
+       location.assign("/app");
+     }
+    </script>
+  </body>
+</html>
