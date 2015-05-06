@@ -7,7 +7,9 @@
        navigator.mozSetMessageHandler('activity', function(activityRequest) {
          var option = activityRequest.source;
 
-         console.log(option.data);
+         if (options.data && options.data.url) {
+           location.assign(options.data.url);
+         }
        });
      } else {
        location.assign("/app");
