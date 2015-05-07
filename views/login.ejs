@@ -4,7 +4,7 @@
     <input name="email" type="email" placeholder="Email ID" class="pure-input-1-2">
     <input name="password" type="password" placeholder="Password" class="pure-input-1-2">
     <input type="hidden" name="csrf" value="<%= csrfToken %>">
-    <input type="button" value="Login to Grouphone" class="pure-button pure-button-primary pure-input-1-4" />
+    <input type="submit" value="Login to Grouphone" class="pure-button pure-button-primary pure-input-1-4" />
   </fieldset>
 
   <p id="notice">&nbsp;</p>
@@ -17,7 +17,7 @@
 
     var csrf = $("input[name='csrf']").value;
 
-    $("input[type='button']").addEventListener("click", function (e) {
+    $("input[type='submit']").addEventListener("click", function (e) {
       e.preventDefault();
 
       var email = $("input[name='email']").value,
