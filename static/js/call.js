@@ -245,7 +245,11 @@ window.addEventListener("DOMContentLoaded", function () {
     if (room) room.disconnect();
     if (socket) {
       socket.emit("call:disconnect", { sessionid: sessionid, username: username }, function (err, sess) {
-        socket.disconnect();
+        try {
+          socket.disconnect();
+        } catch (e) {
+          console.log("Socket already disconnected");
+        }
         window.onbeforeunload = null;
         location.assign("/app");
       });
