@@ -18,16 +18,31 @@ window.addEventListener("DOMContentLoaded", function () {
 
     // Update current call information
     var updatecallinfo = function () {
-      var infoString = ["Call by", creator.name];
-      if ((membercount - 1) > 0) {
-        infoString.push("<br>and", (membercount - 1));
-        if ((membercount - 1) == 1) {
-          infoString.push("other");
-        } else {
-          infoString.push("others");
+      if (!room) return;
+      socket.emit("room:users", { roomid: room.roomID}, function (err, result) {
+        if (err) {
+          console.log(err);
+          return;
         }
-      }
-      callinfo.innerHTML = infoString.join(" ");
+        console.log("users count", JSON.parse(result.users).length);
+        var users = [];
+        try {
+          users = JSON.parse(result.users);
+        } catch (e) {
+          console.log("Error parsing users.");
+        }
+        membercount = users.length;
+        var infoString = ["Call by", creator.name];
+        if ((membercount - 1) > 0) {
+          infoString.push("<br>and", (membercount - 1));
+          if ((membercount - 1) == 1) {
+            infoString.push("other");
+          } else {
+            infoString.push("others");
+          }
+        }
+        callinfo.innerHTML = infoString.join(" ");
+      });
     };
 
     // Check if call exists. Trigger new call or join existing call accordingly
@@ -36,7 +51,10 @@ window.addEventListener("DOMContentLoaded", function () {
         createcall();
       } else {
         // Try reconnecting here
-        callinfo.innerHTML = "Call dropped.";
+        localstream = token = room = null;
+        console.log("Reconnecting...");
+        createcall();
+        callinfo.innerHTML = "Reconnecting...";
       }
     };
 
@@ -87,12 +105,10 @@ window.addEventListener("DOMContentLoaded", function () {
     });
 
     socket.on("user:joined", function () {
-      membercount++;
       updatecallinfo();
     });
 
     socket.on("user:dropped", function () {
-      membercount--;
       updatecallinfo();
     });
 
@@ -168,6 +184,11 @@ window.addEventListener("DOMContentLoaded", function () {
           };
 
           room.addEventListener("room-connected", function (roomevent) {
+
+            var pollusers = setInterval(function () {
+
+            }, 5000);
+
             room.publish(localstream, { maxAudioBW: 24}, function (pubid, err) {
               if (pubid === undefined) {
                 console.log("Error publishing stream");
@@ -192,6 +213,7 @@ window.addEventListener("DOMContentLoaded", function () {
             var streams = [];
             streams.push(streamevent.stream);
             subscribeall(streams);
+            updatecallinfo();
           });
 
           room.addEventListener("stream-failed", function (){
@@ -208,6 +230,7 @@ window.addEventListener("DOMContentLoaded", function () {
                 }
               }
             }
+            updatecallinfo();
           });
 
           room.connect();
