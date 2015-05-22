@@ -12,6 +12,65 @@ window.addEventListener("DOMContentLoaded", function () {
     var callinfo = $("#callInfo"),
         calllink = $("#callLink input[type='text']");
 
+    // ---------------------------------------------
+    // Utility functions. Modularized
+    // ---------------------------------------------
+
+    // Update current call information
+    var updatecallinfo = function () {
+      var infoString = ["Call by", creator.name];
+      if ((membercount - 1) > 0) {
+        infoString.push("<br>and", (membercount - 1));
+        if ((membercount - 1) == 1) {
+          infoString.push("other");
+        } else {
+          infoString.push("others");
+        }
+      }
+      callinfo.innerHTML = infoString.join(" ");
+    };
+
+    // Check if call exists. Trigger new call or join existing call accordingly
+    var checkcall = function () {
+      if (!localstream && !token && !room) {
+        createcall();
+      } else {
+        // Try reconnecting here
+        callinfo.innerHTML = "Call dropped.";
+      }
+    };
+
+    // Get the creator of the call
+    var getcreator = function (members) {
+      var user = null;
+      var key;
+      for (key in members) {
+        if (members.hasOwnProperty(key) && members[key].creator) {
+          user = members[key];
+        }
+      }
+      creator = user;
+      return user;
+    };
+
+    // End call
+    var endcall = function () {
+      if (localstream) localstream.close();
+      if (room) room.disconnect();
+      if (socket) socket.disconnect();
+      callinfo.innerHTML = "Call has ended";
+      calllink.value = "...";
+      window.onbeforeunload = null;
+      room = socket = localstream = null;
+      $("#mute").classList.add("hide");
+      $("#share").classList.add("hide");
+      document.title = "[OFF AIR] " + pagetitle;
+    };
+
+    // ---------------------------------------------
+    // Real operations begin here
+    // ---------------------------------------------
+
     socket = io.connect(conqueror_path, { secure: true });
 
     socket.on("message", function (message) {
@@ -38,56 +97,8 @@ window.addEventListener("DOMContentLoaded", function () {
     });
 
     socket.on("call:ended", function () {
-      if (localstream) localstream.close();
-      if (room) room.disconnect();
-      if (socket) socket.disconnect();
-      callinfo.innerHTML = "Call ended by call creator";
-      calllink.value = "...";
-      window.onbeforeunload = null;
-      room = socket = localstream = null;
-      $("#mute").classList.add("hide");
-      $("#share").classList.add("hide");
-      document.title = "[OFF AIR] " + pagetitle;
+      endcall();
     });
-
-    var updatecallinfo = function () {
-      var infoString = ["Call by", creator.name];
-      if ((membercount - 1) > 0) {
-        infoString.push("<br>and", (membercount - 1));
-        if ((membercount - 1) == 1) {
-          infoString.push("other");
-        } else {
-          infoString.push("others");
-        }
-      }
-      callinfo.innerHTML = infoString.join(" ");
-      if (membercount - 1 < 1) {
-        document.title = "[ON AIR] " + pagetitle;
-      } else {
-        document.title = "(" + (membercount - 1) + ") [ON AIR] " + pagetitle;
-      }
-    };
-
-    var checkcall = function () {
-      if (!localstream && !token && !room) {
-        createcall();
-      } else {
-        // Try reconnecting here
-        callinfo.innerHTML = "Call dropped.";
-      }
-    };
-
-    var getcreator = function (members) {
-      var user = null;
-      var key;
-      for (key in members) {
-        if (members.hasOwnProperty(key) && members[key].creator) {
-          user = members[key];
-        }
-      }
-      creator = user;
-      return user;
-    };
 
     var createcall = function () {
       var callid = sessionid && sessionid.trim(),
@@ -142,6 +153,7 @@ window.addEventListener("DOMContentLoaded", function () {
         localstream = Erizo.Stream({ audio: true, video: false, data: false });
         room = Erizo.Room({ roomID: data.session.data.room._id, token: token});
 
+        // When user has accepted request to share microphone
         localstream.addEventListener("access-accepted", function () {
 
           callinfo.innerHTML = "Got stream. Connecting to call...";
@@ -191,23 +203,31 @@ window.addEventListener("DOMContentLoaded", function () {
             if (streamevent.stream.elementID !== undefined) {
               var streamer = document.getElementById(streamevent.stream.elementID);
               if (streamer) {
-                document.querySelector("#audiocontainer").removeChild(streamer);
+                document.getElementById("#audiocontainer").removeChild(streamer);
               }
             }
           });
 
           room.connect();
-          localstream.play("localaudio");
         }, false);
 
+        // When user has denied request to share microphone
+        localstream.addEventListener("access-denied", function () {
+          callinfo.innerHTML = "Could not get access to microphone.";
+          window.onbeforeunload = null;
+        }, false);
+
+        // Initiate access to stream
         localstream.init();
         callinfo.innerHTML = "Waiting for you to share mic...";
       });
     };
   };
 
-  // Start call
-  initcall(sessionid);
+
+  // ---------------------------------------------
+  // UI bindings
+  // ---------------------------------------------
 
   $("#mute").addEventListener("click", function () {
     if (localstream && localstream.stream){
@@ -246,5 +266,10 @@ window.addEventListener("DOMContentLoaded", function () {
       });
     } else $("#callLink input[type='text']").click();
   }, false);
+
+  // ---------------------------------------------
+  // Initiate call, finally!
+  // ---------------------------------------------
+  initcall(sessionid);
 
 });
