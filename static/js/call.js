@@ -203,7 +203,9 @@ window.addEventListener("DOMContentLoaded", function () {
             if (streamevent.stream.elementID !== undefined) {
               var streamer = document.getElementById(streamevent.stream.elementID);
               if (streamer) {
-                document.getElementById("#audiocontainer").removeChild(streamer);
+                if (document.getElementById("#audiocontainer")) {
+                  document.getElementById("#audiocontainer").removeChild(streamer);
+                }
               }
             }
           });
