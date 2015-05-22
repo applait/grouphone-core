@@ -10,7 +10,8 @@ window.addEventListener("DOMContentLoaded", function () {
   var initcall = function () {
 
     var callinfo = $("#callInfo"),
-        calllink = $("#callLink input[type='text']");
+        calllink = $("#callLink input[type='text']"),
+        audiocontainer = $("#audiocontainer");
 
     // ---------------------------------------------
     // Utility functions. Modularized
@@ -200,7 +201,7 @@ window.addEventListener("DOMContentLoaded", function () {
           room.addEventListener("stream-subscribed", function (streamevent) {
             var div = document.createElement("div");
             div.setAttribute("id", "stream-" + streamevent.stream.getID());
-            document.querySelector("#audiocontainer").appendChild(div);
+            audiocontainer && audiocontainer.appendChild(div);
             streamevent.stream.play("stream-" + streamevent.stream.getID());
           });
 
@@ -219,11 +220,7 @@ window.addEventListener("DOMContentLoaded", function () {
           room.addEventListener("stream-removed", function (streamevent) {
             if (streamevent.stream.elementID !== undefined) {
               var streamer = document.getElementById(streamevent.stream.elementID);
-              if (streamer) {
-                if (document.getElementById("#audiocontainer")) {
-                  document.getElementById("#audiocontainer").removeChild(streamer);
-                }
-              }
+              streamer && audiocontainer && audiocontainer.removeChild(streamer);
             }
             updatecallinfo();
           });
