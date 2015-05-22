@@ -185,10 +185,6 @@ window.addEventListener("DOMContentLoaded", function () {
 
           room.addEventListener("room-connected", function (roomevent) {
 
-            var pollusers = setInterval(function () {
-
-            }, 5000);
-
             room.publish(localstream, { maxAudioBW: 24}, function (pubid, err) {
               if (pubid === undefined) {
                 console.log("Error publishing stream");
