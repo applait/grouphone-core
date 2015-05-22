@@ -24,7 +24,6 @@ window.addEventListener("DOMContentLoaded", function () {
           console.log(err);
           return;
         }
-        console.log("users count", JSON.parse(result.users).length);
         var users = [];
         try {
           users = JSON.parse(result.users);
