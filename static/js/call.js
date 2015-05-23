@@ -172,7 +172,7 @@ window.addEventListener("DOMContentLoaded", function () {
         // When user has accepted request to share microphone
         localstream.addEventListener("access-accepted", function () {
 
-          callinfo.innerHTML = "Got stream. Connecting to call...";
+          callinfo.innerHTML = "Got access to mic. Connecting to call...";
 
           var subscribeall = function (streamslist) {
             for (var index in streamslist) {
