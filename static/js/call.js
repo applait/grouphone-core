@@ -1,17 +1,17 @@
 window.addEventListener("DOMContentLoaded", function () {
   var localstream = null;
-  var token = null;
-  var room = null;
-  var socket = null;
-  var membercount = 0;
-  var creator;
-  var pagetitle = document.title;
+      token = null,
+      room = null,
+      socket = null,
+      membercount = 0,
+      creator = {},
+      pagetitle = document.title;
+
+  var callinfo = $("#callInfo"),
+      calllink = $("#callLink input[type='text']"),
+      audiocontainer = $("#audiocontainer");
 
   var initcall = function () {
-
-    var callinfo = $("#callInfo"),
-        calllink = $("#callLink input[type='text']"),
-        audiocontainer = $("#audiocontainer");
 
     // ---------------------------------------------
     // Utility functions. Modularized
@@ -302,6 +302,13 @@ window.addEventListener("DOMContentLoaded", function () {
   // ---------------------------------------------
   // Initiate call, finally!
   // ---------------------------------------------
-  initcall(sessionid);
+  if (navigator.getUserMedia ||
+      navigator.webkitGetUserMedia ||
+      navigator.mozGetUserMedia ||
+      navigator.msGetUserMedia) {
+    initcall(sessionid);
+  } else {
+    callinfo.innerHTML = "This browser/platform isn't WebRTC capable. [<a href='http://blog.applait.com/173'>?</a>]";
+  }
 
 });
