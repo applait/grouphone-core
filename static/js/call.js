@@ -224,6 +224,7 @@ window.addEventListener("DOMContentLoaded", function () {
                   return;
                 }
 
+                history && history.replaceState && history.replaceState({}, "", "/join/" + sessionid);
                 calllink.setAttribute("value", [location.origin, "join", data.session.id].join("/"));
                 updatecallinfo();
                 $("#callLink").classList.remove("hide");
