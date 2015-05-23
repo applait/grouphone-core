@@ -213,7 +213,8 @@ window.addEventListener("DOMContentLoaded", function () {
           // Trigger publishing of stream when room is connected
           room.addEventListener("room-connected", function (roomevent) {
 
-            var roomconnected = function () {
+            callinfo.innerHTML = "Please wait... Getting your voice...";
+            setTimeout(function () {
 
               room.publish(localstream, { maxAudioBW: 24}, function (pubid, err) {
                 if (pubid === undefined) {
@@ -230,14 +231,7 @@ window.addEventListener("DOMContentLoaded", function () {
                 subscribeall(roomevent.streams);
               });
 
-            };
-
-            callinfo.innerHTML = "Please wait... Getting your voice...";
-            if (Erizo.getBrowser() === "mozilla") {
-              setTimeout(roomconnected, 5000);
-            } else {
-              setTimeout(roomconnected, 3000);
-            }
+            }, 5000);
 
           });
 
