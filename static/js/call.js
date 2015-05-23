@@ -183,21 +183,6 @@ window.addEventListener("DOMContentLoaded", function () {
             }
           };
 
-          room.addEventListener("room-connected", function (roomevent) {
-
-            room.publish(localstream, { maxAudioBW: 24}, function (pubid, err) {
-              if (pubid === undefined) {
-                console.log("Error publishing stream");
-                callinfo.innerHTML = "Unable to publish stream";
-              }
-            });
-            calllink.setAttribute("value", [location.origin, "join", data.session.id].join("/"));
-            updatecallinfo();
-            $("#callLink").classList.remove("hide");
-            $("#callActions").classList.remove("hide");
-            subscribeall(roomevent.streams);
-          });
-
           room.addEventListener("stream-subscribed", function (streamevent) {
             var div = document.createElement("div");
             div.setAttribute("id", "stream-" + streamevent.stream.getID());
@@ -223,6 +208,37 @@ window.addEventListener("DOMContentLoaded", function () {
               streamer && audiocontainer && audiocontainer.removeChild(streamer);
             }
             updatecallinfo();
+          });
+
+          // Trigger publishing of stream when room is connected
+          room.addEventListener("room-connected", function (roomevent) {
+
+            var roomconnected = function () {
+
+              room.publish(localstream, { maxAudioBW: 24}, function (pubid, err) {
+                if (pubid === undefined) {
+                  console.log("Error publishing stream");
+                  callinfo.innerHTML = "Unable to publish stream";
+                  window.onbeforeunload = null;
+                  return;
+                }
+
+                calllink.setAttribute("value", [location.origin, "join", data.session.id].join("/"));
+                updatecallinfo();
+                $("#callLink").classList.remove("hide");
+                $("#callActions").classList.remove("hide");
+                subscribeall(roomevent.streams);
+              });
+
+            };
+
+            callinfo.innerHTML = "Please wait... Getting your voice...";
+            if (Erizo.getBrowser() === "mozilla") {
+              setTimeout(roomconnected, 5000);
+            } else {
+              setTimeout(roomconnected, 3000);
+            }
+
           });
 
           room.connect();
