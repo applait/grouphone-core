@@ -11,6 +11,8 @@ window.addEventListener("DOMContentLoaded", function () {
       calllink = $("#callLink input[type='text']"),
       audiocontainer = $("#audiocontainer");
 
+  var action = window.ontouchstart ? "touchend" : "click";
+
   var initcall = function () {
 
     // ---------------------------------------------
@@ -257,7 +259,7 @@ window.addEventListener("DOMContentLoaded", function () {
   // UI bindings
   // ---------------------------------------------
 
-  $("#mute").addEventListener("click", function () {
+  $("#mute").addEventListener(action, function () {
     if (localstream && localstream.stream){
       if (localstream.stream.getAudioTracks()[0].enabled) {
         localstream.stream.getAudioTracks()[0].enabled = false;
@@ -269,7 +271,7 @@ window.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  $("#endCall").addEventListener("click", function () {
+  $("#endCall").addEventListener(action, function () {
     if (room) room.disconnect();
     if (socket) {
       socket.emit("call:disconnect", { sessionid: sessionid, username: username }, function (err, sess) {
@@ -287,7 +289,7 @@ window.addEventListener("DOMContentLoaded", function () {
     }
   }, false);
 
-  $("#share").addEventListener("click", function () {
+  $("#share").addEventListener(action, function () {
     if (window.MozActivity) {
       new MozActivity({
         name: "share",
