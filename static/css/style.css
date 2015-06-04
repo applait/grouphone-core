@@ -122,6 +122,10 @@ button::-moz-focus-inner {
   -o-transition: all 500ms ease;
   transition: all 500ms ease;
 }
+#invite .button {
+  background: #587C9F;
+
+}
 .fa {
   margin: auto 1rem;
   font-size: 3rem;
@@ -131,6 +135,11 @@ button::-moz-focus-inner {
 .button:hover, .button:active {
   background: #ff4e00;
 }
+#invite .button:hover,
+#invite .button:active {
+  background: #739EC8;
+}
+
 /* 2. Media Queries */
 
 @media screen and (max-width: 960px) {
