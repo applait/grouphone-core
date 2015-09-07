@@ -234,7 +234,7 @@ window.addEventListener("DOMContentLoaded", function () {
                 subscribeall(roomevent.streams);
               });
 
-            }, 5000);
+            }, 2000);
 
           });
 
