@@ -21,7 +21,7 @@ router.post("/", utils.noauth, utils.csrfVerify, function (req, res) {
   // Query the forgot API
   request.post(
     { url: config.API_PATH + "/user/create",
-      form: { email: email, sendEmail: true, isInvite: false }},
+      form: { email: email, sendEmail: true }},
     function (err, response, body) {
       try {
         body = JSON.parse(body);
