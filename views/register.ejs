@@ -1,0 +1,44 @@
+<%- include("includes/head") %>
+<form class="pure-form" method="POST">
+  <h2 class="subtitle">Create an account</h2>
+  <fieldset class="pure-group">
+    <input name="email" type="email" placeholder="Email ID" class="pure-input-1-2">
+    <input type="hidden" name="csrf" value="<%= csrfToken %>">
+    <input type="submit" value="Register" class="pure-button pure-button-primary pure-input-1-4" />
+  </fieldset>
+
+  <p id="notice">&nbsp;</p>
+  <p>Have an account? <a id="forgot-button" href="/login">Login</a></p>
+</form>
+
+<script>
+  window.addEventListener("DOMContentLoaded", function () {
+
+    var csrf = $("input[name='csrf']").value;
+
+    $("input[type='submit']").addEventListener("click", function (e) {
+      e.preventDefault();
+
+      var email = $("input[name='email']").value;
+
+      if (!email) {
+        $("#notice").classList.remove("green");
+        $("#notice").innerHTML = "Email Please...";
+      } else {
+        var payload = [ "email=", email, "&csrf=", csrf ].join("");
+        xhr({ url: "/register", method: "POST", body: payload }, function (status, body, req) {
+          if (status == 200) {
+            $("#notice").classList.add("green");
+            $("#notice").innerHTML = (JSON.parse(body)).message;
+          } else {
+            $("#notice").classList.remove("green");
+            $("#notice").innerHTML = (JSON.parse(body)).message;
+          }
+        });
+      }
+    }, false);
+
+  });
+</script>
+
+<%- include("includes/foot") %>

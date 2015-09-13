@@ -26,5 +26,6 @@ router.use("/forgot", require("./forgot"));
 router.use("/activate", require("./activate"));
 router.use("/invite", require("./invite"));
 router.use("/callhandler", require("./callhandler"));
+router.use("/register", require("./register"));
 
 module.exports = router;

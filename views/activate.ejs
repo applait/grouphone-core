@@ -1,19 +1,19 @@
 <%- include("includes/head") %>
 <% if (user && user.email && user.token) { %>
-      <h2>Reset Password</h2>
+      <h2 class="subtitle">Activate your account</h2>
       <form method="POST" class="pure-form">
         <fieldset class="pure-group">
           <input name="email" type="email" placeholder="Email ID" value="<%= user.email %>" readonly>
           <input name="password" type="password" placeholder="Password" class="pure-input-1-2">
           <input name="token" type="hidden" value="<%= user.token %>">
           <input type="hidden" name="csrf" value="<%= csrfToken %>">
-          <input type="button" value="Create new password" class="pure-button pure-button-primary pure-input-1-2" />
+          <input type="submit" value="Create new password" class="pure-button pure-button-primary pure-input-1-2" />
         </fieldset>
         <p id="notice">&nbsp;</p>
       </form>
       <script>
         window.addEventListener("DOMContentLoaded", function () {
-          $("input[type='button']").addEventListener("click", function (e) {
+          $("input[type='submit']").addEventListener("click", function (e) {
             e.preventDefault();
 
             var email = $("input[name='email']").value,
