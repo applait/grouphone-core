@@ -33,7 +33,7 @@ window.addEventListener("DOMContentLoaded", function () {
         } catch (e) {
           console.log("Error parsing users.");
         }
-        membercount = users.length;
+        membercount = users ? users.length : 1;
         var infoString = ["Call by", creator.name];
         if ((membercount - 1) > 0) {
           infoString.push("<br>and", (membercount - 1));
