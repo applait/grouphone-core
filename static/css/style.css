@@ -86,6 +86,7 @@ body > section {
   -ms-flex-pack: center;
   -moz-box-pack: center;
   justify-content: center;
+  position: relative;
 }
 footer {
   font-size: 1.5rem;
@@ -131,6 +132,14 @@ button::-moz-focus-inner {
   margin: auto 1rem;
   font-size: 3rem;
 }
+.rackspace-logo {
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0.5rem;
+}
+.rackspace-logo > img {
+  width: 150px;
+}
 /* 2. Pseudoclass */
 
 .button:hover, .button:active {
@@ -156,6 +165,9 @@ button::-moz-focus-inner {
   .break {
     display: block;
     margin-bottom: 1rem;
+  }
+  .rackspace-logo > img {
+    width: 100px;
   }
 }
 @media screen and (max-width: 640px) {
